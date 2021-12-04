@@ -30,16 +30,17 @@ CREATE TABLE PROPERTIES (
     bathrooms   INT unsigned NOT NULL,
     furnished   VARCHAR(5) NOT NULL,
     quadrant    VARCHAR(3) NOT NULL,
-    status      VARCHAR(150) NOT NULL,
+    daysleft    INT unsigned NOT NULL,
+    occupied    VARCHAR(5) NOT NULL,
     PRIMARY KEY (id)
 	FOREIGN KEY (owner) REFERENCES USERS(username) ON UPDATE CASCADE
 );
 
-INSERT INTO PROPERTIES (owner, type, bedrooms, bathrooms, furnished, quadrant, status)
+INSERT INTO PROPERTIES (owner, type, bedrooms, bathrooms, furnished, quadrant, daysleft, occupied)
 VALUES
-    ('landlord1',   'apartment',	    1,	2,	'yes',	'NE',	active),
-    ('landlord1',   'apartment',	    1,	2,	'yes',	'NE',	active),
-    ('landlord2',   'attached house',	1,	2,	'yes',	'NW',	active),
-    ('landlord2',   'attached house',	1,	2,	'yes',	'NW',	active),
-    ('landlord3',   'townhouse',	    1,	2,	'yes',	'SE',	active),
-    ('landlord3',   'townhouse',	    1,	2,	'yes',	'SW',	active);
+    ('landlord1',   'apartment',	    1,	2,	'yes',	'NE',	60, 'no'),
+    ('landlord1',   'apartment',	    1,	2,	'yes',	'NE',	60, 'no'),
+    ('landlord2',   'attached house',	1,	2,	'yes',	'NW',	60, 'no'),
+    ('landlord2',   'attached house',	1,	2,	'yes',	'NW',	60, 'no'),
+    ('landlord3',   'townhouse',	    1,	2,	'yes',	'SE',	60, 'no'),
+    ('landlord3',   'townhouse',	    1,	2,	'yes',	'SW',	60, 'no');
