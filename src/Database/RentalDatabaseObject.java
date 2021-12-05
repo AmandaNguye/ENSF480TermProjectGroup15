@@ -1,4 +1,4 @@
-package RentalManagement.Database;
+package src.Database;
 
 import java.io.*;
 import java.math.BigDecimal;

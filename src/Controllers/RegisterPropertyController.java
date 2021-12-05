@@ -1,5 +1,3 @@
-package RentalManagement.Controllers;
+package src.Controllers;
 
-public class RegisterPropertyController {
-    
-}
+public class RegisterPropertyController {}

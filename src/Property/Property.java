@@ -1,5 +1,3 @@
-package RentalManagement.Property;
+package src.Property;
 
-public class Property {
-    
-}
+public class Property {}

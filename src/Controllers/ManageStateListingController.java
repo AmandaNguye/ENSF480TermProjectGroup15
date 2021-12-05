@@ -1,5 +1,3 @@
-package RentalManagement.Controllers;
+package src.Controllers;
 
-public class ManageStateListingController {
-    
-}
+public class ManageStateListingController {}

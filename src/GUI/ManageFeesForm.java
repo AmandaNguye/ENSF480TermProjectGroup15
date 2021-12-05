@@ -1,5 +1,3 @@
-package RentalManagement.GUI;
+package src.GUI;
 
-public class ManageFeesForm {
-    
-}
+public class ManageFeesForm {}
