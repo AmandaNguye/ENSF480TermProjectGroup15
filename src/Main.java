@@ -37,7 +37,8 @@ package src;
 
 import java.awt.*;
 import javax.swing.*;
-import src.GUI.*;
+import src.GUI.Menu.*;
+import src.GUI.Menu.Menu;
 
 /**
  * The Main class house the main method that is use to run the program
@@ -61,7 +62,7 @@ public class Main extends JFrame {
       new Runnable() {
         public void run() {
           try {
-            GuestMenu frame = new GuestMenu();
+            Menu frame = new LandlordMenu();
             frame.setVisible(true);
           } catch (Exception e) {
             e.printStackTrace();
