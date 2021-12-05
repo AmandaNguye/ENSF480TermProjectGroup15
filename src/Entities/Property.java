@@ -1,3 +1,3 @@
-package src.Property;
+package src.Entities;
 
 public class Property {}
