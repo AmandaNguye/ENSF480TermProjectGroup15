@@ -2,6 +2,7 @@ package src.GUI.Menu;
 
 import src.GUI.Tabs.GuestSearchPropertyForm;
 import src.GUI.Tabs.LoginForm;
+import src.GUI.Tabs.RegisterForm;
 
 public class GuestMenu extends Menu {
 
@@ -13,10 +14,14 @@ public class GuestMenu extends Menu {
      * Create the frame.
      */
     super("Start Menu");
-    panel1 = new LoginForm();
+    greeting.setText("Rental Property System");
+    this.add(greeting);
+    panel1 = new LoginForm(this);
     panel2 = new GuestSearchPropertyForm();
-    tabs.add("Login/Register", panel1);
+    panel3 = new RegisterForm(this);
+    tabs.add("Login", panel1);
     tabs.add("Search as Guest", panel2);
+    tabs.add("Register", panel3);
     this.add(tabs);
     this.setLayout(null);
   }

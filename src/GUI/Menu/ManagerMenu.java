@@ -9,11 +9,13 @@ public class ManagerMenu extends Menu {
   /**
    * Launch the application.
    */
-  public ManagerMenu() {
+  public ManagerMenu(String user) {
     /**
      * Create the frame.
      */
     super("Manager Menu");
+    greeting.setText("Welcome " + user);
+    this.add(greeting);
     panel1 = new MakeReportForm();
     panel2 = new ManageFeesForm();
     panel3 = new ManageStateListingForm();
