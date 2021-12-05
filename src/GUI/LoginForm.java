@@ -1,3 +1,5 @@
 package src.GUI;
 
-public class LoginForm {}
+import javax.swing.JFrame;
+
+public class LoginForm extends JFrame {}

@@ -35,14 +35,14 @@ If the username and password are valid, the program will continue to step (4).
 
 package src;
 
-import java.sql.SQLException;
-import java.util.ArrayList;
-import javax.swing.JOptionPane;
+import java.awt.*;
+import javax.swing.*;
+import src.GUI.*;
 
 /**
  * The Main class house the main method that is use to run the program
  */
-public class Main {
+public class Main extends JFrame {
 
   /**
    * The main method is use to run the program First, it makes a connection to the
@@ -53,7 +53,21 @@ public class Main {
    *
    * @param args
    */
+  /**
+   * Launch the application.
+   */
   public static void main(String[] args) {
-    System.exit(0);
+    EventQueue.invokeLater(
+      new Runnable() {
+        public void run() {
+          try {
+            GuestMenu frame = new GuestMenu();
+            frame.setVisible(true);
+          } catch (Exception e) {
+            e.printStackTrace();
+          }
+        }
+      }
+    );
   }
 }
