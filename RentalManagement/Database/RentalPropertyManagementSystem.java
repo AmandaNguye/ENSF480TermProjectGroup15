@@ -123,6 +123,59 @@ public class RentalPropertyManagementSystem {
 			return null;
 		}
 	}
+	
+	public boolean sendMessage(String receiverUsername, String message){
+		try {
+			String query = "INSERT INTO MESSAGES(receiver, message) VALUES (?, ?)";
+			PreparedStatement myStmt = dbConnect.prepareStatement(query);
+			myStmt.setString(1, receiverUsername);
+			myStmt.setString(2, message);
+			myStmt.execute();
+			myStmt.close();
+			return true;
+		} catch (SQLException e) {
+			e.printStackTrace();
+			return false;
+		}
+	}
+	
+	public ResultSet getMessages(String username){
+		try {
+			String query = "SELECT * FROM MESSAGES WHERE receiver = ?";
+			PreparedStatement myStmt = dbConnect.prepareStatement(query);
+			myStmt.setString(1, username);
+			ResultSet results = myStmt.executeQuery();
+			if(!results.next()) {
+				return null;
+			}
+			
+			query = "DELETE FROM MESSAGES WHERE receiver = ?";
+			myStmt = dbConnect.prepareStatement(query);
+			myStmt.setString(1, username);
+			myStmt.execute();
+			myStmt.close();
+		
+			return results;
+		} catch (SQLException e) {
+			e.printStackTrace();
+			return null;
+		}
+	}
+	
+	public boolean subscribe(String type, int bedrooms, int bathrooms, String furnished, String quadrant){
+		try {
+			String query = "INSERT INTO MESSAGES(receiver, message) VALUES (?, ?)";
+			PreparedStatement myStmt = dbConnect.prepareStatement(query);
+			myStmt.setString(1, receiverUsername);
+			myStmt.setString(2, message);
+			myStmt.execute();
+			myStmt.close();
+			return true;
+		} catch (SQLException e) {
+			e.printStackTrace();
+			return false;
+		}
+	}
 
 	public static void main(String args[]) {
 		RentalPropertyManagementSystem rpms = new RentalPropertyManagementSystem();
