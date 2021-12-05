@@ -25,7 +25,7 @@
 -Enter your MySQL password (eg. "ensf409"). This is case-sensitive.
 -Hit "Enter".
 
-If either the unsername or password are invalid, the panel will show
+If either the username or password are invalid, the panel will show
 "Invalid Username or Password, Try Again?"
 -Click "Repeat" to return to step (2).
 

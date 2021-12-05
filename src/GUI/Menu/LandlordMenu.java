@@ -9,11 +9,13 @@ public class LandlordMenu extends Menu {
   /**
    * Launch the application.
    */
-  public LandlordMenu() {
+  public LandlordMenu(String user) {
     /**
      * Create the frame.
      */
     super("Landlord Menu");
+    greeting.setText("Welcome " + user);
+    this.add(greeting);
     panel1 = new RegisterPropertyForm();
     panel2 = new PayFeesForm();
     panel3 = new ManageStateListingForm();

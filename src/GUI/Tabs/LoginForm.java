@@ -1,18 +1,14 @@
 package src.GUI.Tabs;
 
-import com.mysql.cj.x.protobuf.MysqlxNotice.Frame;
-import java.awt.*;
 import java.awt.event.*;
 import java.util.List;
 import javax.swing.*;
-import src.Database.RentalDatabaseObject;
 import src.Entities.User;
-import src.GUI.Menu.LandlordMenu;
-import src.GUI.Menu.ManagerMenu;
-import src.GUI.Menu.RenterMenu;
+import src.GUI.Menu.*;
 
 public class LoginForm extends GUI {
 
+  private Menu menu;
   private JLabel usernameLabel;
   private JTextField usernameText;
   private JLabel passwordLabel;
@@ -20,9 +16,10 @@ public class LoginForm extends GUI {
   private JButton loginButton;
   private JLabel status;
 
-  public LoginForm() {
+  public LoginForm(Menu caller) {
     // create the DAO
     super();
+    menu = caller;
     usernameLabel = new JLabel("User");
     usernameLabel.setBounds(10, 20, 80, 25);
     add(usernameLabel);
@@ -64,15 +61,18 @@ public class LoginForm extends GUI {
                   JOptionPane.showMessageDialog(null, "Password field empty.");
                 } else if (user.getPassword().equals(password)) {
                   if (user.getAccountType().equals("renter")) {
-                    RenterMenu frame = new RenterMenu();
+                    menu.dispose();
+                    RenterMenu frame = new RenterMenu(username);
                     frame.setVisible(true);
                   }
                   if (user.getAccountType().equals("landlord")) {
-                    LandlordMenu frame = new LandlordMenu();
+                    menu.dispose();
+                    LandlordMenu frame = new LandlordMenu(username);
                     frame.setVisible(true);
                   }
                   if (user.getAccountType().equals("manager")) {
-                    ManagerMenu frame = new ManagerMenu();
+                    menu.dispose();
+                    ManagerMenu frame = new ManagerMenu(username);
                     frame.setVisible(true);
                   }
                 } else {

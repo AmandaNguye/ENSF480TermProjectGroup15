@@ -65,6 +65,26 @@ public class RentalDatabaseObject {
     }
   }
 
+  public void enterUser(User newUser) throws Exception {
+    PreparedStatement query = null;
+    ResultSet results = null;
+
+    try {
+      query =
+        myConn.prepareStatement(
+          "INSERT INTO users (username, password, accounttype) VALUES (?, ?, ?)"
+        );
+      query.setString(1, newUser.getUsername());
+      query.setString(2, newUser.getPassword());
+      query.setString(3, newUser.getAccountType());
+      System.out.println(query.toString());
+      int rowcount = query.executeUpdate();
+      System.out.println("Success - " + rowcount + " rows affected.");
+    } finally {
+      close(query, results);
+    }
+  }
+
   private User convertRowToUser(ResultSet set) throws SQLException {
     String username = set.getString("username");
     String password = set.getString("password");
