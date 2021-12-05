@@ -12,6 +12,7 @@ CREATE TABLE USERS (
 	username        VARCHAR(150) NOT NULL,
     password        VARCHAR(150) NOT NULL,
     account_type     VARCHAR(150) NOT NULL,
+
     PRIMARY KEY     (username)
 );
 
@@ -60,10 +61,16 @@ CREATE TABLE MESSAGES (
 	FOREIGN KEY (receiver) REFERENCES USERS(username) ON UPDATE CASCADE
 );
 
-DROP TABLE IF EXISTS SUBSCRIPTION;
-CREATE TABLE SUBSCRIPTION (
-    receiver	VARCHAR(150) NOT NULL,
-    message		VARCHAR(150) NOT NULL,
+DROP TABLE IF EXISTS SUBSCRIPTIONS;
+CREATE TABLE SUBSCRIPTIONS (
+    renter				VARCHAR(150) NOT NULL,
+    subscribed			VARCHAR(150) NOT NULL,
+    type        		VARCHAR(150) NOT NULL,
+    bedrooms    		INT unsigned NOT NULL,
+    bathrooms   		INT unsigned NOT NULL,
+    furnished   		VARCHAR(150) NOT NULL,
+    quadrant    		VARCHAR(150) NOT NULL,
+    datesubscribed   	DATE NOT NULL,
 	FOREIGN KEY (receiver) REFERENCES USERS(username) ON UPDATE CASCADE
 );
 
