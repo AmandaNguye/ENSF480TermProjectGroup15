@@ -1,5 +1,7 @@
 package RentalManagement.GUI;
-
-public class GUI {
+import javax.swing.JFrame;
+import javax.swing.JPanel;
+public class GUI 
+{
     
 }

@@ -1,5 +1,6 @@
 package RentalManagement.GUI;
 
-public class GuestMenu {
+public class GuestMenu 
+{
     
 }
