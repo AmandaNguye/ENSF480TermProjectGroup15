@@ -285,10 +285,10 @@ public class RentalDatabaseObject {
 
   public static void main(String[] args) throws Exception {
     RentalDatabaseObject dao = new RentalDatabaseObject();
-    //System.out.println(dao.getAllUsers());
+    System.out.println(dao.getAllUsers());
     //System.out.println(dao.searchUsername("moussavifan"));
     //System.out.println(dao.searchProperties("apartment", 1, 1, "NE", true));
     //System.out.println(dao.getAllProperties());
-    dao.updatePropertyStatus();
+    //dao.updatePropertyStatus();
   }
 }
