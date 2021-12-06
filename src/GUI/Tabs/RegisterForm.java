@@ -26,36 +26,36 @@ public class RegisterForm extends GUI {
     super();
     menu = caller;
     accountTypeLabel = new JLabel("AccountType:");
-    accountTypeLabel.setBounds(10, 20, 80, 25);
+    accountTypeLabel.setBounds(130, 20, 80, 25);
     add(accountTypeLabel);
 
     String[] types = { "Renter", "Landlord", "Manager" };
     accountTypeBox = new JComboBox<String>(types);
-    accountTypeBox.setBounds(120, 20, 100, 25);
+    accountTypeBox.setBounds(240, 20, 100, 25);
     add(accountTypeBox);
 
     usernameLabel = new JLabel("User");
-    usernameLabel.setBounds(10, 50, 80, 25);
+    usernameLabel.setBounds(130, 50, 80, 25);
     add(usernameLabel);
 
     usernameText = new JTextField(20);
-    usernameText.setBounds(120, 50, 165, 25);
+    usernameText.setBounds(240, 50, 165, 25);
     add(usernameText);
 
     passwordLabel = new JLabel("Password");
-    passwordLabel.setBounds(10, 80, 80, 25);
+    passwordLabel.setBounds(130, 80, 80, 25);
     add(passwordLabel);
 
     passwordText = new JPasswordField(20);
-    passwordText.setBounds(120, 80, 165, 25);
+    passwordText.setBounds(240, 80, 165, 25);
     add(passwordText);
 
     confirmPasswordLabel = new JLabel("Confirm Password");
-    confirmPasswordLabel.setBounds(10, 110, 80, 25);
+    confirmPasswordLabel.setBounds(130, 110, 80, 25);
     add(confirmPasswordLabel);
 
     confirmPasswordText = new JPasswordField(20);
-    confirmPasswordText.setBounds(120, 110, 165, 25);
+    confirmPasswordText.setBounds(240, 110, 165, 25);
     add(confirmPasswordText);
 
     registerButton = new JButton("Register");
@@ -117,7 +117,7 @@ public class RegisterForm extends GUI {
       }
     );
 
-    registerButton.setBounds(110, 160, 100, 25);
+    registerButton.setBounds(210, 160, 100, 25);
     add(registerButton);
 
     status = new JLabel("");

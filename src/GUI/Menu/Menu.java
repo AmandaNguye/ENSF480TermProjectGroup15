@@ -22,7 +22,7 @@ public class Menu extends JFrame {
     greeting.setFont(new Font("Arial", Font.BOLD, 20));
     greeting.setBounds(20, 10, 400, 50);
     tabs = new JTabbedPane();
-    tabs.setBounds(20, 60, 550, 470);
+    tabs.setBounds(20, 60, 550, 480);
     setVisible(true);
   }
 }
