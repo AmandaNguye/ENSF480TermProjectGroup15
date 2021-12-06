@@ -131,15 +131,15 @@ public class RentalDatabaseObject {
     if (furnished) furnishedInt = 1;
     try {
       String tempquery = "SELECT * FROM properties WHERE";
-      if (type != null) {
+      if (!type.equals("any")) {
         tempquery += " type = '" + type + "'";
       }
-      if (tempquery.length() > 24) {
+      if (!tempquery.equals("SELECT * FROM properties WHERE")) {
         tempquery += " AND";
       }
       tempquery += " bedrooms >= " + bedrooms;
       tempquery += " AND bathrooms >= " + bathrooms;
-      if (quadrant != null) {
+      if (!quadrant.equals("Any")) {
         tempquery += " AND quadrant = '" + quadrant + "'";
       }
       tempquery += " AND furnished >= " + furnishedInt;
