@@ -181,8 +181,6 @@ public class RentalDatabaseObject {
   }
 
   private void updatePropertyStatus() throws SQLException {
-    List<Property> list = new ArrayList<>();
-
     PreparedStatement query = null;
     ResultSet results = null;
 
@@ -193,7 +191,8 @@ public class RentalDatabaseObject {
         );
       query.setString(1, java.time.LocalDate.now().toString());
       System.out.println(query.toString());
-      results = query.executeQuery();
+      int rowcount = query.executeUpdate();
+      System.out.println("Success - " + rowcount + " rows affected.");
     } finally {
       close(query, results);
     }
@@ -289,6 +288,6 @@ public class RentalDatabaseObject {
     //System.out.println(dao.searchUsername("moussavifan"));
     //System.out.println(dao.searchProperties("apartment", 1, 1, "NE", true));
     //System.out.println(dao.getAllProperties());
-    System.out.println(java.time.LocalDate.now().toString());
+    dao.updatePropertyStatus();
   }
 }
