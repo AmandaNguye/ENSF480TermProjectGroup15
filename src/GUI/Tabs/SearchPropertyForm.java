@@ -21,10 +21,12 @@ public class SearchPropertyForm extends GUI {
   private JButton searchButton;
   private JScrollPane scrollPane;
   private JTable propertyTable;
+  private JButton emailButton;
+  private String landlord;
 
   //private JLabel status;
 
-  public SearchPropertyForm() {
+  public SearchPropertyForm(String user) {
     super();
     typeLabel = new JLabel("Type:");
     typeLabel.setBounds(10, 20, 80, 25);
@@ -73,6 +75,7 @@ public class SearchPropertyForm extends GUI {
     searchButton.addActionListener(
       new ActionListener() {
         public void actionPerformed(ActionEvent e) {
+          emailButton.setVisible(true);
           String type = typeBox.getSelectedItem().toString().toLowerCase();
           int bedrooms = Integer.parseInt(
             bedroomsBox.getSelectedItem().toString()
@@ -123,5 +126,34 @@ public class SearchPropertyForm extends GUI {
 
     propertyTable = new JTable();
     scrollPane.setViewportView(propertyTable);
+
+    emailButton = new JButton("Email Owner");
+    emailButton.addActionListener(
+      new ActionListener() {
+        public void actionPerformed(ActionEvent e) {
+          String address = String.valueOf(
+            propertyTable.getValueAt(propertyTable.getSelectedRow(), 0)
+          );
+          try {
+            landlord = rentalDAO.getPropertyLandlord(address);
+            String message = JOptionPane.showInputDialog(
+              "What would you like to email for listing '" + address + "'?"
+            );
+            if (message != null) rentalDAO.enterEmail(user, landlord, message);
+            JOptionPane.showMessageDialog(null, "Email Sent.");
+          } catch (Exception exc) {
+            JOptionPane.showMessageDialog(
+              SearchPropertyForm.this,
+              "Error: " + exc,
+              "Error",
+              JOptionPane.ERROR_MESSAGE
+            );
+          }
+        }
+      }
+    );
+    emailButton.setVisible(false);
+    emailButton.setBounds(210, 400, 100, 25);
+    add(emailButton);
   }
 }

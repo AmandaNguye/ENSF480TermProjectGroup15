@@ -1,5 +1,6 @@
 package src.Database;
 
+import com.mysql.cj.protocol.Message;
 import java.io.*;
 import java.sql.*;
 import java.text.DateFormat;
@@ -120,6 +121,26 @@ public class RentalDatabaseObject {
     }
   }
 
+  public String getPropertyLandlord(String address) throws Exception {
+    String username = null;
+    PreparedStatement query = null;
+    ResultSet results = null;
+
+    try {
+      query =
+        myConn.prepareStatement("SELECT owner FROM properties WHERE address=?");
+      query.setString(1, address);
+
+      results = query.executeQuery();
+      while (results.next()) {
+        username = results.getString("owner");
+      }
+      return username;
+    } finally {
+      close(query, results);
+    }
+  }
+
   public List<Property> searchPropertyAddress(String address) throws Exception {
     List<Property> list = new ArrayList<>();
 
@@ -135,6 +156,71 @@ public class RentalDatabaseObject {
       while (results.next()) {
         Property tempProperty = convertRowToProperty(results);
         list.add(tempProperty);
+      }
+      return list;
+    } finally {
+      close(query, results);
+    }
+  }
+
+  public void enterEmail(String sender, String receiver, String message)
+    throws Exception {
+    PreparedStatement query = null;
+    ResultSet results = null;
+
+    try {
+      query =
+        myConn.prepareStatement(
+          "INSERT INTO emails (sender, receiver, message) VALUES (?, ?, ?)"
+        );
+      query.setString(1, sender);
+      query.setString(2, receiver);
+      query.setString(3, message);
+      System.out.println(query.toString());
+      int rowcount = query.executeUpdate();
+      System.out.println("Success - " + rowcount + " rows affected.");
+    } finally {
+      close(query, results);
+    }
+  }
+
+  public void deleteEmail(String sender, String receiver, String message)
+    throws Exception {
+    PreparedStatement query = null;
+    ResultSet results = null;
+
+    try {
+      query =
+        myConn.prepareStatement(
+          "DELETE FROM emails WHERE sender = ? AND receiver = ? AND message = ?"
+        );
+      query.setString(1, sender);
+      query.setString(2, receiver);
+      query.setString(3, message);
+      System.out.println(query.toString());
+      int rowcount = query.executeUpdate();
+      System.out.println("Success - " + rowcount + " rows affected.");
+    } finally {
+      close(query, results);
+    }
+  }
+
+  public List<Email> getUserEmails(String user) throws Exception {
+    List<Email> list = new ArrayList<>();
+
+    PreparedStatement query = null;
+    ResultSet results = null;
+
+    try {
+      query = myConn.prepareStatement("SELECT * FROM emails WHERE receiver=?");
+      query.setString(1, user);
+
+      results = query.executeQuery();
+      while (results.next()) {
+        String sender = results.getString("sender");
+        String receiver = results.getString("receiver");
+        String message = results.getString("message");
+        list.add(new Email(sender, receiver, message));
       }
       return list;
     } finally {
