@@ -2,7 +2,12 @@ package src.Database;
 
 import java.io.*;
 import java.sql.*;
+import java.text.DateFormat;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
+import java.time.LocalDate;
 import java.util.*;
+import java.util.Date;
 import src.Entities.*;
 
 public class RentalDatabaseObject {
@@ -137,6 +142,28 @@ public class RentalDatabaseObject {
     }
   }
 
+  public List<Property> getLandlordProperties(String landlord)
+    throws Exception {
+    List<Property> list = new ArrayList<>();
+
+    PreparedStatement query = null;
+    ResultSet results = null;
+
+    try {
+      query = myConn.prepareStatement("SELECT * FROM properties WHERE owner=?");
+      query.setString(1, landlord);
+
+      results = query.executeQuery();
+      while (results.next()) {
+        Property tempProperty = convertRowToProperty(results);
+        list.add(tempProperty);
+      }
+      return list;
+    } finally {
+      close(query, results);
+    }
+  }
+
   public List<Property> searchProperties(
     String type,
     int bedrooms,
@@ -145,7 +172,7 @@ public class RentalDatabaseObject {
     Boolean furnished
   )
     throws Exception {
-    updatePropertyStatus();
+    updateAllPropertyStatus();
     List<Property> list = new ArrayList<>();
 
     PreparedStatement query = null;
@@ -181,7 +208,58 @@ public class RentalDatabaseObject {
     }
   }
 
-  private void updatePropertyStatus() throws SQLException {
+  public void changePropertyExpiry(
+    String address,
+    String orignalExpiry,
+    int extendedDays
+  )
+    throws SQLException, ParseException {
+    PreparedStatement query = null;
+    ResultSet results = null;
+
+    try {
+      query =
+        myConn.prepareStatement(
+          "UPDATE properties SET expirydate = ? WHERE address = ?"
+        );
+      DateFormat formatter = new SimpleDateFormat("yyyy-mm-dd");
+      Date tempDate = formatter.parse(orignalExpiry);
+      LocalDate newDate = new java.sql.Date(tempDate.getTime()).toLocalDate();
+      String newExpiry = String.valueOf(newDate.plusDays(extendedDays));
+
+      query.setString(1, newExpiry);
+      query.setString(2, address);
+      System.out.println(query.toString());
+      int rowcount = query.executeUpdate();
+      System.out.println("Success - " + rowcount + " rows affected.");
+    } finally {
+      close(query, results);
+    }
+    updateAllPropertyStatus();
+  }
+
+  public void changePropertyStatus(String address, String status)
+    throws SQLException {
+    PreparedStatement query = null;
+    ResultSet results = null;
+
+    try {
+      query =
+        myConn.prepareStatement(
+          "UPDATE properties SET status = ? WHERE address = ?"
+        );
+      query.setString(1, status);
+      query.setString(2, address);
+      System.out.println(query.toString());
+      int rowcount = query.executeUpdate();
+      System.out.println("Success - " + rowcount + " rows affected.");
+    } finally {
+      close(query, results);
+    }
+    updateAllPropertyStatus();
+  }
+
+  private void updateAllPropertyStatus() throws SQLException {
     PreparedStatement query = null;
     ResultSet results = null;
 
@@ -262,6 +340,74 @@ public class RentalDatabaseObject {
     }
   }
 
+  public int getFeePeriod() throws Exception {
+    int days = 0;
+
+    PreparedStatement query = null;
+    ResultSet results = null;
+
+    try {
+      query = myConn.prepareStatement("SELECT perioddays FROM feeinfo");
+      results = query.executeQuery();
+      while (results.next()) {
+        days = results.getInt("perioddays");
+      }
+      return days;
+    } finally {
+      close(query, results);
+    }
+  }
+
+  public void setFeePeriod(int newPeriod) throws Exception {
+    PreparedStatement query = null;
+    ResultSet results = null;
+
+    try {
+      query =
+        myConn.prepareStatement(
+          "REPLACE INTO feeinfo (perioddays) VALUES (" + newPeriod + ")"
+        );
+      int rowcount = query.executeUpdate();
+      System.out.println("Success - " + rowcount + " rows affected.");
+    } finally {
+      close(query, results);
+    }
+  }
+
+  public int getFeePrice() throws Exception {
+    int price = 0;
+
+    PreparedStatement query = null;
+    ResultSet results = null;
+
+    try {
+      query = myConn.prepareStatement("SELECT price FROM feeinfo");
+      results = query.executeQuery();
+      while (results.next()) {
+        price = results.getInt("price");
+      }
+      return price;
+    } finally {
+      close(query, results);
+    }
+  }
+
+  public void setFeePrice(int newPrice) throws Exception {
+    PreparedStatement query = null;
+    ResultSet results = null;
+
+    try {
+      query =
+        myConn.prepareStatement(
+          "REPLACE INTO feeinfo (price) VALUES (" + newPrice + ")"
+        );
+      int rowcount = query.executeUpdate();
+      System.out.println("Success - " + rowcount + " rows affected.");
+    } finally {
+      close(query, results);
+    }
+  }
+
   private static void close(
     Connection myConn,
     Statement myStmt,
@@ -290,5 +436,6 @@ public class RentalDatabaseObject {
     //System.out.println(dao.searchProperties("apartment", 1, 1, "NE", true));
     //System.out.println(dao.getAllProperties());
     //dao.updatePropertyStatus();
+    //dao.changePropertyStatus("111 North ST", "cancelled");
   }
 }

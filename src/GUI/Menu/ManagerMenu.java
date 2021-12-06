@@ -19,7 +19,7 @@ public class ManagerMenu extends Menu {
     this.add(greeting);
     panel1 = new MakeReportForm();
     panel2 = new ManageFeesForm();
-    panel3 = new ManageStateListingForm();
+    panel3 = new ManageStateListingForm(user, "manager");
     panel4 = new ViewUsersWindow();
     tabs.add("Request a Report", panel1);
     tabs.add("Manage Fees", panel2);

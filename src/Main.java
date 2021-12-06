@@ -62,7 +62,7 @@ public class Main extends JFrame {
       new Runnable() {
         public void run() {
           try {
-            Menu frame = new ManagerMenu("manager1");
+            Menu frame = new ManagerMenu("manager");
             frame.setVisible(true);
           } catch (Exception e) {
             e.printStackTrace();

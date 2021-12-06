@@ -18,8 +18,8 @@ public class LandlordMenu extends Menu {
     greeting.setText("Welcome " + user);
     this.add(greeting);
     panel1 = new RegisterPropertyForm(user);
-    panel2 = new PayFeesForm();
-    panel3 = new ManageStateListingForm();
+    panel2 = new PayFeesForm(user, "landlord");
+    panel3 = new ManageStateListingForm(user, "landlord");
     panel4 = new ViewEmailWindow();
     tabs.add("Register a New Property", panel1);
     tabs.add("Pay Fees", panel2);
