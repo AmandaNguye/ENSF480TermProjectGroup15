@@ -6,7 +6,7 @@ import javax.swing.table.AbstractTableModel;
 public class PropertyTableModel extends AbstractTableModel {
 
   private static final int ID_COL = 0;
-  private static final int NAME_COL = 1;
+  private static final int ADDRESS_COL = 1;
   private static final int OWNER_COL = 2;
   private static final int TYPE_COL = 3;
   private static final int BEDROOM_COL = 4;
@@ -18,7 +18,7 @@ public class PropertyTableModel extends AbstractTableModel {
 
   private String[] columnNames = {
     "ID",
-    "Name",
+    "Address",
     "Owner",
     "Type",
     "Bedrooms",
@@ -56,8 +56,8 @@ public class PropertyTableModel extends AbstractTableModel {
     switch (col) {
       case ID_COL:
         return tempProperty.getId();
-      case NAME_COL:
-        return tempProperty.getName();
+      case ADDRESS_COL:
+        return tempProperty.getAddress();
       case OWNER_COL:
         return tempProperty.getOwner();
       case TYPE_COL:
@@ -75,7 +75,7 @@ public class PropertyTableModel extends AbstractTableModel {
       case EXPIRY_COL:
         return tempProperty.getExpirydate();
       default:
-        return tempProperty.getName();
+        return tempProperty.getAddress();
     }
   }
 

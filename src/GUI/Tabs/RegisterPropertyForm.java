@@ -7,8 +7,8 @@ import src.Entities.*;
 
 public class RegisterPropertyForm extends GUI {
 
-  private JLabel nameLabel;
-  private JTextField nameText;
+  private JLabel addressLabel;
+  private JTextField addressText;
   private JLabel typeLabel;
   private JComboBox<String> typeBox;
   private JLabel bedroomsLabel;
@@ -25,13 +25,13 @@ public class RegisterPropertyForm extends GUI {
 
   public RegisterPropertyForm(String user) {
     super();
-    nameLabel = new JLabel("Title:");
-    nameLabel.setBounds(80, 20, 80, 25);
-    add(nameLabel);
+    addressLabel = new JLabel("Address:");
+    addressLabel.setBounds(80, 20, 80, 25);
+    add(addressLabel);
 
-    nameText = new JTextField(40);
-    nameText.setBounds(150, 20, 300, 25);
-    add(nameText);
+    addressText = new JTextField(40);
+    addressText.setBounds(150, 20, 300, 25);
+    add(addressText);
 
     typeLabel = new JLabel("Type:");
     typeLabel.setBounds(80, 50, 80, 25);
@@ -80,7 +80,7 @@ public class RegisterPropertyForm extends GUI {
       new ActionListener() {
         public void actionPerformed(ActionEvent e) {
           try {
-            String name = nameText.getText();
+            String address = addressText.getText();
             String type = typeBox.getSelectedItem().toString().toLowerCase();
             int bedrooms = Integer.parseInt(
               bedroomsBox.getSelectedItem().toString()
@@ -91,11 +91,11 @@ public class RegisterPropertyForm extends GUI {
             String quadrant = quadrantBox.getSelectedItem().toString();
             Boolean furnished = furnishedBox.isSelected();
 
-            if (name == null || name.trim().length() == 0) {
-              JOptionPane.showMessageDialog(null, "Name field empty.");
+            if (address == null || address.trim().length() == 0) {
+              JOptionPane.showMessageDialog(null, "Address field empty.");
             } else {
-              List<Property> tempProperties = rentalDAO.searchPropertyName(
-                name
+              List<Property> tempProperties = rentalDAO.searchPropertyAddress(
+                address
               );
               if (tempProperties.size() != 0) {
                 JOptionPane.showMessageDialog(null, "Name is taken.");
@@ -103,7 +103,7 @@ public class RegisterPropertyForm extends GUI {
                 rentalDAO.enterProperty(
                   new Property(
                     0,
-                    name,
+                    address,
                     user,
                     type,
                     bedrooms,

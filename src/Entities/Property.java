@@ -3,7 +3,7 @@ package src.Entities;
 public class Property {
 
   private int id;
-  private String name;
+  private String address;
   private String owner;
   private String type;
   private int bedrooms;
@@ -15,7 +15,7 @@ public class Property {
 
   public Property(
     int id,
-    String name,
+    String address,
     String owner,
     String type,
     int bedrooms,
@@ -26,7 +26,7 @@ public class Property {
     String expirydate
   ) {
     this.id = id;
-    this.name = name;
+    this.address = address;
     this.owner = owner;
     this.type = type;
     this.bedrooms = bedrooms;
@@ -45,12 +45,12 @@ public class Property {
     this.id = id;
   }
 
-  public String getName() {
-    return name;
+  public String getAddress() {
+    return address;
   }
 
-  public void setName(String name) {
-    this.name = name;
+  public void setAddress(String address) {
+    this.address = address;
   }
 
   public String getOwner() {
@@ -124,9 +124,9 @@ public class Property {
       furnishedString = "true";
     }
     return String.format(
-      "\nProperty [id=%s, name=%s, owner=%s, type=%s, bedrooms=%s, bathrooms=%s, furnished=%s, quadrant=%s, status=%s, expirydate=%s]",
+      "\nProperty [id=%s, address=%s, owner=%s, type=%s, bedrooms=%s, bathrooms=%s, furnished=%s, quadrant=%s, status=%s, expirydate=%s]",
       String.valueOf(id),
-      name,
+      address,
       owner,
       type,
       String.valueOf(bedrooms),

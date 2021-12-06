@@ -115,15 +115,16 @@ public class RentalDatabaseObject {
     }
   }
 
-  public List<Property> searchPropertyName(String name) throws Exception {
+  public List<Property> searchPropertyAddress(String address) throws Exception {
     List<Property> list = new ArrayList<>();
 
     PreparedStatement query = null;
     ResultSet results = null;
 
     try {
-      query = myConn.prepareStatement("SELECT * FROM properties WHERE name=?");
-      query.setString(1, name);
+      query =
+        myConn.prepareStatement("SELECT * FROM properties WHERE address=?");
+      query.setString(1, address);
 
       results = query.executeQuery();
       while (results.next()) {
@@ -200,7 +201,7 @@ public class RentalDatabaseObject {
 
   private Property convertRowToProperty(ResultSet set) throws SQLException {
     int id = set.getInt("id");
-    String name = set.getString("name");
+    String address = set.getString("address");
     String owner = set.getString("owner");
     String type = set.getString("type");
     int bedrooms = set.getInt("bedrooms");
@@ -217,7 +218,7 @@ public class RentalDatabaseObject {
 
     Property tempProperty = new Property(
       id,
-      name,
+      address,
       owner,
       type,
       bedrooms,
@@ -240,7 +241,7 @@ public class RentalDatabaseObject {
         myConn.prepareStatement(
           "INSERT INTO properties (name, owner, type, bedrooms, bathrooms, furnished, quadrant, status, expirydate) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?)"
         );
-      query.setString(1, newProperty.getName());
+      query.setString(1, newProperty.getAddress());
       query.setString(2, newProperty.getOwner());
       query.setString(3, newProperty.getType());
       query.setInt(4, newProperty.getBedrooms());

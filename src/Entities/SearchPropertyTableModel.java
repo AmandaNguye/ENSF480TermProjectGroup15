@@ -5,7 +5,7 @@ import javax.swing.table.AbstractTableModel;
 
 public class SearchPropertyTableModel extends AbstractTableModel {
 
-  private static final int NAME_COL = 0;
+  private static final int ADDRESS_COL = 0;
   private static final int TYPE_COL = 1;
   private static final int BEDROOM_COL = 2;
   private static final int BATHROOM_COL = 3;
@@ -13,7 +13,7 @@ public class SearchPropertyTableModel extends AbstractTableModel {
   private static final int QUADRANT_COL = 5;
 
   private String[] columnNames = {
-    "Name",
+    "Address",
     "Type",
     "Bedrooms",
     "Bathrooms",
@@ -46,8 +46,8 @@ public class SearchPropertyTableModel extends AbstractTableModel {
     Property tempProperty = properties.get(row);
 
     switch (col) {
-      case NAME_COL:
-        return tempProperty.getName();
+      case ADDRESS_COL:
+        return tempProperty.getAddress();
       case TYPE_COL:
         return tempProperty.getType();
       case BEDROOM_COL:
@@ -59,7 +59,7 @@ public class SearchPropertyTableModel extends AbstractTableModel {
       case QUADRANT_COL:
         return tempProperty.getQuadrant();
       default:
-        return tempProperty.getName();
+        return tempProperty.getAddress();
     }
   }
 

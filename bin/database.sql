@@ -26,7 +26,7 @@ DROP TABLE IF EXISTS PROPERTIES;
 DROP TABLE IF EXISTS PROPERTIES;
 CREATE TABLE PROPERTIES (
     id INT unsigned NOT NULL AUTO_INCREMENT,
-    name VARCHAR(150) NOT NULL,
+    address VARCHAR(150) NOT NULL,
     owner VARCHAR(150) NOT NULL,
     type VARCHAR(150) NOT NULL,
     bedrooms INT unsigned NOT NULL,
@@ -39,7 +39,7 @@ CREATE TABLE PROPERTIES (
     FOREIGN KEY (owner) REFERENCES USERS(username) ON UPDATE CASCADE
   );
 
-INSERT INTO PROPERTIES (name, owner, type, bedrooms, bathrooms, furnished, quadrant, status, expirydate)
+INSERT INTO PROPERTIES (address, owner, type, bedrooms, bathrooms, furnished, quadrant, status, expirydate)
 VALUES
     ('funkyhouse',          'moussavifan',   'apartment',	        1,	2,	1,	'NE',	'active', '2021-12-12'),
     ('nice apartment',      'moussavifan',   'apartment',	        1,	2,	1,	'NE',	'active', '2021-12-12'),
