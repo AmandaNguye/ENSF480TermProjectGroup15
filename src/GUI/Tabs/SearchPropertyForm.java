@@ -29,15 +29,15 @@ public class SearchPropertyForm extends GUI {
   public SearchPropertyForm(String user) {
     super();
     typeLabel = new JLabel("Type:");
-    typeLabel.setBounds(10, 20, 80, 25);
+    typeLabel.setBounds(40, 20, 80, 25);
     quadrantLabel = new JLabel("Quadrant:");
-    quadrantLabel.setBounds(260, 20, 80, 25);
+    quadrantLabel.setBounds(290, 20, 80, 25);
     bedroomsLabel = new JLabel("Bedrooms:");
-    bedroomsLabel.setBounds(10, 50, 80, 25);
+    bedroomsLabel.setBounds(40, 50, 80, 25);
     bathroomsLabel = new JLabel("Bathrooms:");
-    bathroomsLabel.setBounds(260, 50, 80, 25);
+    bathroomsLabel.setBounds(290, 50, 80, 25);
     furnishedLabel = new JLabel("Furnished:");
-    furnishedLabel.setBounds(10, 80, 80, 25);
+    furnishedLabel.setBounds(40, 80, 80, 25);
 
     String[] types = {
       "Any",
@@ -47,18 +47,18 @@ public class SearchPropertyForm extends GUI {
       "Townhouse",
     };
     typeBox = new JComboBox<String>(types);
-    typeBox.setBounds(80, 20, 100, 25);
+    typeBox.setBounds(110, 20, 100, 25);
     String[] quadrant = { "Any", "NE", "NW", "SE", "SW" };
     quadrantBox = new JComboBox<String>(quadrant);
-    quadrantBox.setBounds(330, 20, 100, 25);
+    quadrantBox.setBounds(360, 20, 100, 25);
     String[] bedrooms = { "0", "1", "2", "3", "4", "5", "6", "7" };
     bedroomsBox = new JComboBox<String>(bedrooms);
-    bedroomsBox.setBounds(80, 50, 100, 25);
+    bedroomsBox.setBounds(110, 50, 100, 25);
     String[] bathrooms = { "0", "1", "2", "3", "4", "5", "6", "7" };
     bathroomsBox = new JComboBox<String>(bathrooms);
-    bathroomsBox.setBounds(330, 50, 100, 25);
+    bathroomsBox.setBounds(360, 50, 100, 25);
     furnishedBox = new JCheckBox();
-    furnishedBox.setBounds(80, 80, 100, 25);
+    furnishedBox.setBounds(110, 80, 100, 25);
 
     add(typeLabel);
     add(typeBox);
@@ -139,8 +139,10 @@ public class SearchPropertyForm extends GUI {
             String message = JOptionPane.showInputDialog(
               "What would you like to email for listing '" + address + "'?"
             );
-            if (message != null) rentalDAO.enterEmail(user, landlord, message);
-            JOptionPane.showMessageDialog(null, "Email Sent.");
+            if (message != null) {
+              rentalDAO.enterEmail(user, landlord, message);
+              JOptionPane.showMessageDialog(null, "Email Sent.");
+            }
           } catch (Exception exc) {
             JOptionPane.showMessageDialog(
               SearchPropertyForm.this,
