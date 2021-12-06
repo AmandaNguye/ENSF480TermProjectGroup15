@@ -21,7 +21,8 @@ public class SearchPropertyForm extends GUI {
   private JButton searchButton;
   private JScrollPane scrollPane;
   private JTable propertyTable;
-  private JLabel status;
+
+  //private JLabel status;
 
   public SearchPropertyForm() {
     super();
@@ -37,6 +38,7 @@ public class SearchPropertyForm extends GUI {
     furnishedLabel.setBounds(10, 80, 80, 25);
 
     String[] types = {
+      "Any",
       "Apartment",
       "Attached House",
       "Detached House",
@@ -44,13 +46,13 @@ public class SearchPropertyForm extends GUI {
     };
     typeBox = new JComboBox<String>(types);
     typeBox.setBounds(80, 20, 100, 25);
-    String[] quadrant = { "NE", "NW", "SE", "SW" };
+    String[] quadrant = { "Any", "NE", "NW", "SE", "SW" };
     quadrantBox = new JComboBox<String>(quadrant);
     quadrantBox.setBounds(330, 20, 100, 25);
-    String[] bedrooms = { "1", "2", "3", "4", "5", "6", "7" };
+    String[] bedrooms = { "0", "1", "2", "3", "4", "5", "6", "7" };
     bedroomsBox = new JComboBox<String>(bedrooms);
     bedroomsBox.setBounds(80, 50, 100, 25);
-    String[] bathrooms = { "1", "2", "3", "4", "5", "6", "7" };
+    String[] bathrooms = { "0", "1", "2", "3", "4", "5", "6", "7" };
     bathroomsBox = new JComboBox<String>(bathrooms);
     bathroomsBox.setBounds(330, 50, 100, 25);
     furnishedBox = new JCheckBox();
@@ -67,7 +69,6 @@ public class SearchPropertyForm extends GUI {
     add(quadrantLabel);
     add(quadrantBox);
 
-    searchButton = new JButton("Search");
     searchButton = new JButton("Search");
     searchButton.addActionListener(
       new ActionListener() {

@@ -17,7 +17,8 @@ public class RegisterPropertyForm extends GUI {
   private JLabel quadrantLabel;
   private JComboBox<String> quadrantBox;
   private JButton RegisterButton;
-  private JLabel status;
+
+  //private JLabel status;
 
   public RegisterPropertyForm() {
     super();
