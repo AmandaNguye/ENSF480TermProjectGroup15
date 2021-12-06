@@ -110,7 +110,7 @@ public class RegisterPropertyForm extends GUI {
                     bathrooms,
                     furnished,
                     quadrant,
-                    "inactive",
+                    "suspended",
                     java.time.LocalDate.now().toString()
                   )
                 );

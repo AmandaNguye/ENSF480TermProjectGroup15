@@ -144,6 +144,7 @@ public class RentalDatabaseObject {
     Boolean furnished
   )
     throws Exception {
+    updatePropertyStatus();
     List<Property> list = new ArrayList<>();
 
     PreparedStatement query = null;
@@ -174,6 +175,25 @@ public class RentalDatabaseObject {
         list.add(tempProperty);
       }
       return list;
+    } finally {
+      close(query, results);
+    }
+  }
+
+  private void updatePropertyStatus() throws SQLException {
+    List<Property> list = new ArrayList<>();
+
+    PreparedStatement query = null;
+    ResultSet results = null;
+
+    try {
+      query =
+        myConn.prepareStatement(
+          "UPDATE properties SET status = 'suspended' WHERE status = 'active' AND expirydate <= ?"
+        );
+      query.setString(1, java.time.LocalDate.now().toString());
+      System.out.println(query.toString());
+      results = query.executeQuery();
     } finally {
       close(query, results);
     }
@@ -268,6 +288,7 @@ public class RentalDatabaseObject {
     //System.out.println(dao.getAllUsers());
     //System.out.println(dao.searchUsername("moussavifan"));
     //System.out.println(dao.searchProperties("apartment", 1, 1, "NE", true));
-    System.out.println(dao.getAllProperties());
+    //System.out.println(dao.getAllProperties());
+    System.out.println(java.time.LocalDate.now().toString());
   }
 }
