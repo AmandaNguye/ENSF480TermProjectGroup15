@@ -23,7 +23,6 @@ VALUES
     ('manager', 'ensf480', 'manager');
 
 DROP TABLE IF EXISTS PROPERTIES;
-DROP TABLE IF EXISTS PROPERTIES;
 CREATE TABLE PROPERTIES (
     id INT unsigned NOT NULL AUTO_INCREMENT,
     address VARCHAR(150) NOT NULL,
@@ -47,3 +46,29 @@ VALUES
     ('22 Shawnnesay Rd',    'moussavifan',   'attached house',	    1,	2,	1,	'NW',	'active', '2022-1-1'),
     ('33 Chinook Hhwy',     'moussavifan',   'townhouse',	        1,	2,	1,	'SE',	'active', '2022-1-1'),
     ('1 St SE',             'moussavifan',   'townhouse',	        1,	2,	1,	'SW',	'active', '2022-1-1');
+
+DROP TABLE IF EXISTS FEEINFO;
+CREATE TABLE FEEINFO (
+    integrity_keeper ENUM('') NOT NULL PRIMARY KEY,
+    price INT unsigned NOT NULL,
+    perioddays INT unsigned NOT NULL
+);
+
+INSERT INTO FEEINFO (price, perioddays)
+VALUES
+    (80, 60);
+
+DROP TABLE IF EXISTS NOTIFICATIONS;
+CREATE TABLE NOTIFICATIONS (
+    listingid INT unsigned NOT NULL,
+    renter VARCHAR(150) NOT NULL,
+    FOREIGN KEY (listingid) REFERENCES PROPERTIES(id) ON UPDATE CASCADE,
+    FOREIGN KEY (renter) REFERENCES USERS(username) ON UPDATE CASCADE
+);
+DROP TABLE IF EXISTS RENTEDHISTORY;
+
+CREATE TABLE RENTEDHISTORY (
+    listingid INT unsigned NOT NULL,
+    FOREIGN KEY (listingid) REFERENCES PROPERTIES(id) ON UPDATE CASCADE
+);
+
