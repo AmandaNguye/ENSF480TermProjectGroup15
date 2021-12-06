@@ -2,7 +2,19 @@ DROP DATABASE IF EXISTS ENSF480;
 CREATE DATABASE ENSF480; 
 USE ENSF480;
 
+DROP TABLE IF EXISTS FEEINFO;
+CREATE TABLE FEEINFO (
+    integrity_keeper ENUM('') NOT NULL PRIMARY KEY,
+    price INT unsigned NOT NULL,
+    perioddays INT unsigned NOT NULL
+);
+INSERT INTO FEEINFO (price, perioddays)
+VALUES
+    (80, 60);
 
+DROP TABLE IF EXISTS SUBSCRIPTIONS;
+DROP TABLE IF EXISTS EMAILS;
+DROP TABLE IF EXISTS PROPERTIES;
 DROP TABLE IF EXISTS USERS;
 CREATE TABLE USERS (
 	username        VARCHAR(150) NOT NULL,
@@ -22,7 +34,27 @@ VALUES
     ('renter3', 'ensf480', 'renter'),
     ('manager', 'ensf480', 'manager');
 
-DROP TABLE IF EXISTS PROPERTIES;
+CREATE TABLE SUBSCRIPTIONS (
+    id INT unsigned NOT NULL AUTO_INCREMENT,
+    renter VARCHAR(150) NOT NULL,
+    type VARCHAR(150) NOT NULL,
+    bedrooms INT unsigned NOT NULL,
+    bathrooms INT unsigned NOT NULL,
+    furnished INT NOT NULL,
+    quadrant VARCHAR(3) NOT NULL,
+    PRIMARY KEY (id),
+    FOREIGN KEY (renter) REFERENCES USERS(username) ON UPDATE CASCADE
+);
+CREATE TABLE EMAILS (
+    sender VARCHAR(150) NOT NULL,
+    receiver VARCHAR(150) NOT NULL,
+    message VARCHAR(200) NOT NULL,
+    FOREIGN KEY (sender) REFERENCES USERS(username) ON UPDATE CASCADE,
+    FOREIGN KEY (receiver) REFERENCES USERS(username) ON UPDATE CASCADE
+);
+
+DROP TABLE IF EXISTS NOTIFICATIONS;
+DROP TABLE IF EXISTS RENTEDHISTORY;
 CREATE TABLE PROPERTIES (
     id INT unsigned NOT NULL AUTO_INCREMENT,
     address VARCHAR(150) NOT NULL,
@@ -57,47 +89,18 @@ VALUES
     ('21 Northmount Dr',    'landlord3',      'townhouse',	        2,	3,	0,	'NW',	'active',   '2021-11-1'),
     ('2 St SW',             'moussavifan',   'townhouse',	        1,	2,	1,	'SW',	'active',   '2022-1-1');
 
-DROP TABLE IF EXISTS FEEINFO;
-CREATE TABLE FEEINFO (
-    integrity_keeper ENUM('') NOT NULL PRIMARY KEY,
-    price INT unsigned NOT NULL,
-    perioddays INT unsigned NOT NULL
-);
 
-INSERT INTO FEEINFO (price, perioddays)
-VALUES
-    (80, 60);
 
-DROP TABLE IF EXISTS NOTIFICATIONS;
 CREATE TABLE NOTIFICATIONS (
     listingid INT unsigned NOT NULL,
     renter VARCHAR(150) NOT NULL,
     FOREIGN KEY (listingid) REFERENCES PROPERTIES(id) ON UPDATE CASCADE,
     FOREIGN KEY (renter) REFERENCES USERS(username) ON UPDATE CASCADE
 );
-DROP TABLE IF EXISTS RENTEDHISTORY;
 
 CREATE TABLE RENTEDHISTORY (
     listingid INT unsigned NOT NULL,
     FOREIGN KEY (listingid) REFERENCES PROPERTIES(id) ON UPDATE CASCADE
 );
-DROP TABLE IF EXISTS EMAILS;
 
-CREATE TABLE EMAILS (
-    sender VARCHAR(150) NOT NULL,
-    receiver VARCHAR(150) NOT NULL,
-    message VARCHAR(200) NOT NULL,
-    FOREIGN KEY (sender) REFERENCES USERS(username) ON UPDATE CASCADE,
-    FOREIGN KEY (receiver) REFERENCES USERS(username) ON UPDATE CASCADE
-);
-DROP TABLE IF EXISTS SUBSCRIPTIONS;
 
-CREATE TABLE SUBSCRIPTIONS (
-    renter VARCHAR(150) NOT NULL,
-    type VARCHAR(150) NOT NULL,
-    bedrooms INT unsigned NOT NULL,
-    bathrooms INT unsigned NOT NULL,
-    furnished INT NOT NULL,
-    quadrant VARCHAR(3) NOT NULL,
-    FOREIGN KEY (renter) REFERENCES USERS(username) ON UPDATE CASCADE
-);
