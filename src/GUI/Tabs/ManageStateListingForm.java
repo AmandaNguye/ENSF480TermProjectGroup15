@@ -65,11 +65,13 @@ public class ManageStateListingForm extends GUI {
               statusOptions,
               statusOptions[0]
             );
-            rentalDAO.changePropertyStatus(address, status);
-            JOptionPane.showMessageDialog(
-              null,
-              "Status Updated! Expired listings will not be changed to active until paid. Click 'Show Properties' to refresh the statuses."
-            );
+            if (status != null) {
+              rentalDAO.changePropertyStatus(address, status);
+              JOptionPane.showMessageDialog(
+                null,
+                "Status Updated! Expired listings will not be changed to active until paid. Click 'Show Properties' to refresh the statuses."
+              );
+            }
           } catch (Exception exc) {
             JOptionPane.showMessageDialog(
               ManageStateListingForm.this,

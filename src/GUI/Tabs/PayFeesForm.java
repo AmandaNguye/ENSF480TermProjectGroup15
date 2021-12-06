@@ -113,15 +113,16 @@ public class PayFeesForm extends GUI {
               periodOptions,
               periodOptions[0]
             );
-
-            int daysExtended =
-              Character.getNumericValue(period.charAt(0)) *
-              rentalDAO.getFeePeriod();
-            rentalDAO.changePropertyExpiry(address, expiry, daysExtended);
-            JOptionPane.showMessageDialog(
-              null,
-              "Status Updated! Expired listings will not be changed to active until paid. Click 'Show Properties' to refresh the statuses."
-            );
+            if (period != null) {
+              int daysExtended =
+                Character.getNumericValue(period.charAt(0)) *
+                rentalDAO.getFeePeriod();
+              rentalDAO.changePropertyExpiry(address, expiry, daysExtended);
+              JOptionPane.showMessageDialog(
+                null,
+                "Status Updated! Expired listings will not be changed to active until paid. Click 'Show Properties' to refresh the statuses."
+              );
+            }
           } catch (Exception exc) {
             JOptionPane.showMessageDialog(
               PayFeesForm.this,

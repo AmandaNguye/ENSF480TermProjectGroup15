@@ -1,6 +1,5 @@
 package src.Database;
 
-import com.mysql.cj.protocol.Message;
 import java.io.*;
 import java.sql.*;
 import java.text.DateFormat;
@@ -102,6 +101,8 @@ public class RentalDatabaseObject {
   }
 
   public List<Property> getAllProperties() throws Exception {
+    updateAllPropertyStatus();
+
     List<Property> list = new ArrayList<>();
 
     Statement query = null;
@@ -230,6 +231,8 @@ public class RentalDatabaseObject {
 
   public List<Property> getLandlordProperties(String landlord)
     throws Exception {
+    updateAllPropertyStatus();
+
     List<Property> list = new ArrayList<>();
 
     PreparedStatement query = null;
@@ -421,6 +424,7 @@ public class RentalDatabaseObject {
       System.out.println(query.toString());
       int rowcount = query.executeUpdate();
       System.out.println("Success - " + rowcount + " rows affected.");
+      updateAllPropertyStatus();
     } finally {
       close(query, results);
     }
