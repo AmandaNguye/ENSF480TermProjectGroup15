@@ -12,6 +12,7 @@ public class Menu extends JFrame {
   protected JPanel panel4;
   protected JPanel panel5;
   protected JTabbedPane tabs;
+//  protected JPanel properties;
 
   Menu(String title) {
     setTitle(title);
@@ -25,4 +26,10 @@ public class Menu extends JFrame {
     tabs.setBounds(20, 60, 400, 320);
     setVisible(true);
   }
+  
+//  public void switchPanels(JPanel panel) {
+//	  this.removeAll();
+//	  this.add(panel);
+//	  this.repaint();
+//  }
 }

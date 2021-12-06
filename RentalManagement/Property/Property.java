@@ -5,12 +5,12 @@ import java.time.LocalDate;
 public class Property {
 	int id;
 	String owner;
-	String address;
-	String type;
-	int bedrooms;
-	int bathrooms;
-	boolean furnished;
-	String quadrant;
+	public String address;
+	public String type;
+	public int bedrooms;
+	public int bathrooms;
+	public boolean furnished;
+	public String quadrant;
 	LocalDate daysleft;
 	String state;
 
@@ -27,4 +27,5 @@ public class Property {
 	this.daysleft = daysleft;
 	this.state = state;
 	}
+	
 }

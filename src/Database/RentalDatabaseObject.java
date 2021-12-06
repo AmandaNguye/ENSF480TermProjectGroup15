@@ -2,7 +2,11 @@ package src.Database;
 
 import java.io.*;
 import java.sql.*;
+import java.sql.Date;
+import java.time.LocalDate;
 import java.util.*;
+
+import RentalManagement.Property.Property;
 import src.Entities.*;
 
 public class RentalDatabaseObject {
@@ -123,4 +127,35 @@ public class RentalDatabaseObject {
     System.out.println(dao.searchUsername("moussavifan"));
   }
   */
+  
+	public ArrayList<Property> searchPropety(String type, int bedrooms, int bathrooms, boolean furnished, String quadrant) {
+		try {
+			String query = "SELECT * FROM properties WHERE type = ? AND bedrooms = ? AND bathrooms = ? AND furnished = ? AND quadrant = ? AND daysleft > ? AND state = 'active'";
+//			String query = "SELECT * FROM properties WHERE type = ? AND bedrooms = ? AND bathrooms = ? AND furnished = ? AND quadrant = ?";
+			
+			PreparedStatement myStmt = myConn.prepareStatement(query);
+			myStmt.setString(1, type);
+			myStmt.setInt(2, bedrooms);
+			myStmt.setInt(3, bathrooms);
+			myStmt.setBoolean(4, furnished);
+			myStmt.setString(5, quadrant);
+			myStmt.setDate(6, Date.valueOf(LocalDate.now()));
+			System.out.println(myStmt);
+			return parsePropertyResultSet(myStmt.executeQuery());
+		} catch (SQLException e) {
+			e.printStackTrace();
+			return null;
+		}
+	}
+	
+	public ArrayList<Property> parsePropertyResultSet(ResultSet results) throws SQLException {
+		ArrayList<Property> data = new ArrayList<Property>();
+		while (results.next()) {
+			data.add(new Property(results.getInt("id"), results.getString("owner"), results.getString("address"),
+					results.getString("type"), results.getInt("bedrooms"), results.getInt("bathrooms"),
+					results.getBoolean("furnished"), results.getString("quadrant"), results.getDate("daysleft").toLocalDate(), results.getString("state")));
+		}
+		return data;
+	}
+  
 }

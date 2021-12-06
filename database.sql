@@ -11,7 +11,7 @@ DROP TABLE IF EXISTS USERS;
 CREATE TABLE USERS (
 	username        VARCHAR(150) NOT NULL,
     password        VARCHAR(150) NOT NULL,
-    account_type     VARCHAR(150) NOT NULL,
+    accounttype     VARCHAR(150) NOT NULL,
 
     PRIMARY KEY     (username)
 );
@@ -46,6 +46,19 @@ CREATE TABLE PROPERTIES (
 
 INSERT INTO PROPERTIES (owner, type, bedrooms, bathrooms, furnished, quadrant, daysleft, address, state, dateposted)
 VALUES
+    ('landlord1',   'apartment',	    1,	2,	true,	'NE',	'2021-12-27', 	'123 street', 'active', 	'2021-11-1'),
+    ('landlord1',   'apartment',	    1,	2,	true,	'NE',	'2021-12-27', 	'123 street', 'active', 	'2021-11-1'),
+    ('landlord1',   'apartment',	    1,	2,	false,	'NE',	'2021-12-28', 	'124 street', 'rented', 	'2021-11-27'),
+    ('landlord2',   'attached house',	1,	2,	true,	'NW',	'2021-12-29', 	'125 street', 'cancelled', 	'2021-11-28'),
+    ('landlord2',   'attached house',	1,	2,	false,	'NW',	'2021-12-26', 	'126 street', 'suspended', 	'2021-11-29'),
+    ('landlord3',   'townhouse',	    1,	2,	true,	'SE',	'2021-12-25', 	'127 street', 'active', 	'2021-11-26'),
+    ('landlord3',   'townhouse',	    1,	2,	false,	'SW',	'2021-12-1', 	'128 street', 'active', 	'2021-11-25'),
+    ('landlord1',   'apartment',	    1,	2,	true,	'NE',	'2021-12-27', 	'123 street', 'active', 	'2021-11-1'),
+    ('landlord1',   'apartment',	    1,	2,	false,	'NE',	'2021-12-28', 	'124 street', 'rented', 	'2021-11-27'),
+    ('landlord2',   'attached house',	1,	2,	true,	'NW',	'2021-12-29', 	'125 street', 'cancelled', 	'2021-11-28'),
+    ('landlord2',   'attached house',	1,	2,	false,	'NW',	'2021-12-26', 	'126 street', 'suspended', 	'2021-11-29'),
+    ('landlord3',   'townhouse',	    1,	2,	true,	'SE',	'2021-12-25', 	'127 street', 'active', 	'2021-11-26'),
+    ('landlord3',   'townhouse',	    1,	2,	false,	'SW',	'2021-12-1', 	'128 street', 'active', 	'2021-11-25'),
     ('landlord1',   'apartment',	    1,	2,	true,	'NE',	'2021-12-27', 	'123 street', 'active', 	'2021-11-1'),
     ('landlord1',   'apartment',	    1,	2,	false,	'NE',	'2021-12-28', 	'124 street', 'rented', 	'2021-11-27'),
     ('landlord2',   'attached house',	1,	2,	true,	'NW',	'2021-12-29', 	'125 street', 'cancelled', 	'2021-11-28'),
