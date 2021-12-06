@@ -16,31 +16,34 @@ VALUES
     ('landlord1', 'ensf480', 'landlord'),
     ('landlord2', 'ensf480', 'landlord'),
     ('landlord3', 'ensf480', 'landlord'),
+    ('moussavifan', 'ensf480', 'landlord'),
     ('renter1', 'ensf480', 'renter'),
     ('renter2', 'ensf480', 'renter'),
     ('renter3', 'ensf480', 'renter'),
     ('manager', 'ensf480', 'manager');
 
 DROP TABLE IF EXISTS PROPERTIES;
+DROP TABLE IF EXISTS PROPERTIES;
 CREATE TABLE PROPERTIES (
-	id          INT unsigned NOT NULL AUTO_INCREMENT,
-    owner       VARCHAR(150) NOT NULL,
-    type        VARCHAR(150) NOT NULL,
-    bedrooms    INT unsigned NOT NULL,
-    bathrooms   INT unsigned NOT NULL,
-    furnished   VARCHAR(5) NOT NULL,
-    quadrant    VARCHAR(3) NOT NULL,
-    daysleft    INT unsigned NOT NULL,
-    occupied    VARCHAR(5) NOT NULL,
-    PRIMARY KEY (id)
-	FOREIGN KEY (owner) REFERENCES USERS(username) ON UPDATE CASCADE
-);
+    id INT unsigned NOT NULL AUTO_INCREMENT,
+    name VARCHAR(150) NOT NULL,
+    owner VARCHAR(150) NOT NULL,
+    type VARCHAR(150) NOT NULL,
+    bedrooms INT unsigned NOT NULL,
+    bathrooms INT unsigned NOT NULL,
+    furnished INT NOT NULL,
+    quadrant VARCHAR(3) NOT NULL,
+    status VARCHAR(15) NOT NULL,
+    expirydate DATE NOT NULL,
+    PRIMARY KEY (id), 
+    FOREIGN KEY (owner) REFERENCES USERS(username) ON UPDATE CASCADE
+  );
 
-INSERT INTO PROPERTIES (owner, type, bedrooms, bathrooms, furnished, quadrant, daysleft, occupied)
+INSERT INTO PROPERTIES (name, owner, type, bedrooms, bathrooms, furnished, quadrant, status, expirydate)
 VALUES
-    ('landlord1',   'apartment',	    1,	2,	'yes',	'NE',	60, 'no'),
-    ('landlord1',   'apartment',	    1,	2,	'yes',	'NE',	60, 'no'),
-    ('landlord2',   'attached house',	1,	2,	'yes',	'NW',	60, 'no'),
-    ('landlord2',   'attached house',	1,	2,	'yes',	'NW',	60, 'no'),
-    ('landlord3',   'townhouse',	    1,	2,	'yes',	'SE',	60, 'no'),
-    ('landlord3',   'townhouse',	    1,	2,	'yes',	'SW',	60, 'no');
+    ('funkyhouse',          'moussavifan',   'apartment',	        1,	2,	1,	'NE',	'active', '2021-12-12'),
+    ('nice apartment',      'moussavifan',   'apartment',	        1,	2,	1,	'NE',	'active', '2021-12-12'),
+    ('my doghouse',         'moussavifan',   'attached house',	    1,	2,	1,	'NW',	'active', '2021-12-12'),
+    ('plsrentthishouse',    'moussavifan',   'attached house',	    1,	2,	1,	'NW',	'active', '2021-12-12'),
+    ('townhousekensignton', 'moussavifan',   'townhouse',	        1,	2,	1,	'SE',	'active', '2021-12-12'),
+    ('universityofcalgary', 'moussavifan',   'townhouse',	        1,	2,	1,	'SW',	'active', '2021-12-12');

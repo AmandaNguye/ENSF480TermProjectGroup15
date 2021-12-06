@@ -95,6 +95,102 @@ public class RentalDatabaseObject {
     return tempUser;
   }
 
+  public List<Property> getAllProperties() throws Exception {
+    List<Property> list = new ArrayList<>();
+
+    Statement query = null;
+    ResultSet results = null;
+
+    try {
+      query = myConn.createStatement();
+      results = query.executeQuery("SELECT * FROM properties");
+
+      while (results.next()) {
+        Property tempProperty = convertRowToProperty(results);
+        list.add(tempProperty);
+      }
+      return list;
+    } finally {
+      close(query, results);
+    }
+  }
+
+  public List<Property> searchProperties(
+    String type,
+    int bedrooms,
+    int bathrooms,
+    String quadrant,
+    Boolean furnished
+  )
+    throws Exception {
+    List<Property> list = new ArrayList<>();
+
+    PreparedStatement query = null;
+    ResultSet results = null;
+    int furnishedInt = 0;
+    if (furnished) furnishedInt = 1;
+    try {
+      String tempquery = "SELECT * FROM properties WHERE";
+      if (type != null) {
+        tempquery += " type = '" + type + "'";
+      }
+      if (tempquery.length() > 24) {
+        tempquery += " AND";
+      }
+      tempquery += " bedrooms >= " + bedrooms;
+      tempquery += " AND bathrooms >= " + bathrooms;
+      if (quadrant != null) {
+        tempquery += " AND quadrant = '" + quadrant + "'";
+      }
+      tempquery += " AND furnished >= " + furnishedInt;
+      tempquery += " AND status = 'active'";
+      System.out.println(tempquery);
+      query = myConn.prepareStatement(tempquery);
+
+      results = query.executeQuery();
+      while (results.next()) {
+        Property tempProperty = convertRowToProperty(results);
+        list.add(tempProperty);
+      }
+      return list;
+    } finally {
+      close(query, results);
+    }
+  }
+
+  private Property convertRowToProperty(ResultSet set) throws SQLException {
+    int id = set.getInt("id");
+    String name = set.getString("name");
+    String owner = set.getString("owner");
+    String type = set.getString("type");
+    int bedrooms = set.getInt("bedrooms");
+    int bathrooms = set.getInt("bathrooms");
+    int furnished = set.getInt("furnished");
+    String quadrant = set.getString("quadrant");
+    String status = set.getString("status");
+    String expirydate = set.getString("expirydate");
+
+    boolean furnishedBool = false;
+    if (Integer.valueOf(furnished) == 1) {
+      furnishedBool = true;
+    }
+
+    Property tempProperty = new Property(
+      id,
+      name,
+      owner,
+      type,
+      bedrooms,
+      bathrooms,
+      furnishedBool,
+      quadrant,
+      status,
+      expirydate
+    );
+
+    return tempProperty;
+  }
+
   private static void close(
     Connection myConn,
     Statement myStmt,
@@ -115,12 +211,12 @@ public class RentalDatabaseObject {
   private void close(Statement myStmt, ResultSet myRs) throws SQLException {
     close(null, myStmt, myRs);
   }
-  /*
-    public static void main(String[] args) throws Exception {
-    RentalDatabaseObject dao = new RentalDatabaseObject();
 
-    System.out.println(dao.getAllUsers());
-    System.out.println(dao.searchUsername("moussavifan"));
+  public static void main(String[] args) throws Exception {
+    RentalDatabaseObject dao = new RentalDatabaseObject();
+    //System.out.println(dao.getAllUsers());
+    //System.out.println(dao.searchUsername("moussavifan"));
+    //System.out.println(dao.searchProperties("apartment", 1, 1, "NE", true));
+    System.out.println(dao.getAllProperties());
   }
-  */
 }

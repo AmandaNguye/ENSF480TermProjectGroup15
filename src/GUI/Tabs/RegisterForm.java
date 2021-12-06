@@ -70,8 +70,6 @@ public class RegisterForm extends GUI {
               .getSelectedItem()
               .toString()
               .toLowerCase();
-            User user = null;
-
             if (username == null || username.trim().length() == 0) {
               JOptionPane.showMessageDialog(null, "Username field empty.");
             } else {

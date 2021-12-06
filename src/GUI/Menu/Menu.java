@@ -16,13 +16,13 @@ public class Menu extends JFrame {
   Menu(String title) {
     setTitle(title);
     setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-    setSize(450, 450);
+    setSize(600, 600);
     greeting = new JLabel();
     greeting.setText("Rental Management Property System");
     greeting.setFont(new Font("Arial", Font.BOLD, 20));
     greeting.setBounds(20, 10, 400, 50);
     tabs = new JTabbedPane();
-    tabs.setBounds(20, 60, 400, 320);
+    tabs.setBounds(20, 60, 550, 470);
     setVisible(true);
   }
 }

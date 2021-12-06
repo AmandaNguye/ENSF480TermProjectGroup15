@@ -1,6 +1,10 @@
 package src.GUI.Tabs;
 
+import java.awt.*;
+import java.awt.event.*;
+import java.util.List;
 import javax.swing.*;
+import src.Entities.*;
 
 public class GuestSearchPropertyForm extends GUI {
 
@@ -15,6 +19,8 @@ public class GuestSearchPropertyForm extends GUI {
   private JLabel quadrantLabel;
   private JComboBox<String> quadrantBox;
   private JButton searchButton;
+  private JScrollPane scrollPane;
+  private JTable propertyTable;
   private JLabel status;
 
   public GuestSearchPropertyForm() {
@@ -62,7 +68,59 @@ public class GuestSearchPropertyForm extends GUI {
     add(quadrantBox);
 
     searchButton = new JButton("Search");
+    searchButton = new JButton("Search");
+    searchButton.addActionListener(
+      new ActionListener() {
+        public void actionPerformed(ActionEvent e) {
+          String type = typeBox.getSelectedItem().toString().toLowerCase();
+          int bedrooms = Integer.parseInt(
+            bedroomsBox.getSelectedItem().toString()
+          );
+          int bathrooms = Integer.parseInt(
+            bathroomsBox.getSelectedItem().toString()
+          );
+          String quadrant = quadrantBox.getSelectedItem().toString();
+          Boolean furnished = furnishedBox.isSelected();
+          List<Property> properties = null;
+          try {
+            properties =
+              rentalDAO.searchProperties(
+                type,
+                bedrooms,
+                bathrooms,
+                quadrant,
+                furnished
+              );
+            SearchPropertyTableModel model = new SearchPropertyTableModel(
+              properties
+            );
+            propertyTable.setModel(model);
+          } catch (Exception exc) {
+            JOptionPane.showMessageDialog(
+              GuestSearchPropertyForm.this,
+              "Error: " + exc,
+              "Error",
+              JOptionPane.ERROR_MESSAGE
+            );
+          }
+        }
+      }
+    );
     searchButton.setBounds(150, 120, 100, 25);
     add(searchButton);
+
+    scrollPane = new JScrollPane();
+    scrollPane.setHorizontalScrollBarPolicy(
+      JScrollPane.HORIZONTAL_SCROLLBAR_AS_NEEDED
+    );
+    scrollPane.setVerticalScrollBarPolicy(
+      JScrollPane.VERTICAL_SCROLLBAR_AS_NEEDED
+    );
+
+    scrollPane.setBounds(10, 150, 500, 220);
+    add(scrollPane, BorderLayout.CENTER);
+
+    propertyTable = new JTable();
+    scrollPane.setViewportView(propertyTable);
   }
 }
