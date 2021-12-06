@@ -358,22 +358,6 @@ public class RentalDatabaseObject {
     }
   }
 
-  public void setFeePeriod(int newPeriod) throws Exception {
-    PreparedStatement query = null;
-    ResultSet results = null;
-
-    try {
-      query =
-        myConn.prepareStatement(
-          "REPLACE INTO feeinfo (perioddays) VALUES (" + newPeriod + ")"
-        );
-      int rowcount = query.executeUpdate();
-      System.out.println("Success - " + rowcount + " rows affected.");
-    } finally {
-      close(query, results);
-    }
-  }
-
   public int getFeePrice() throws Exception {
     int price = 0;
 
@@ -392,15 +376,20 @@ public class RentalDatabaseObject {
     }
   }
 
-  public void setFeePrice(int newPrice) throws Exception {
+  public void setFeeInfo(int newPrice, int newPeriod) throws Exception {
     PreparedStatement query = null;
     ResultSet results = null;
 
     try {
       query =
         myConn.prepareStatement(
-          "REPLACE INTO feeinfo (price) VALUES (" + newPrice + ")"
+          "REPLACE INTO feeinfo (price, perioddays) VALUES (" +
+          newPrice +
+          "," +
+          newPeriod +
+          ")"
         );
+      System.out.println(query.toString());
       int rowcount = query.executeUpdate();
       System.out.println("Success - " + rowcount + " rows affected.");
     } finally {
