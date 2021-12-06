@@ -39,7 +39,7 @@ public class User {
   @Override
   public String toString() {
     return String.format(
-      "User [username=%s, password=%s, account type=%s]",
+      "\nUser [username=%s, password=%s, account type=%s]",
       username,
       password,
       accountType

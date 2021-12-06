@@ -21,19 +21,19 @@ public class LoginForm extends GUI {
     super();
     menu = caller;
     usernameLabel = new JLabel("User");
-    usernameLabel.setBounds(10, 20, 80, 25);
+    usernameLabel.setBounds(140, 20, 80, 25);
     add(usernameLabel);
 
     usernameText = new JTextField(20);
-    usernameText.setBounds(100, 20, 165, 25);
+    usernameText.setBounds(230, 20, 165, 25);
     add(usernameText);
 
     passwordLabel = new JLabel("Password");
-    passwordLabel.setBounds(10, 50, 80, 25);
+    passwordLabel.setBounds(140, 50, 80, 25);
     add(passwordLabel);
 
     passwordText = new JPasswordField(20);
-    passwordText.setBounds(100, 50, 165, 25);
+    passwordText.setBounds(230, 50, 165, 25);
     add(passwordText);
 
     loginButton = new JButton("Login");
@@ -92,11 +92,11 @@ public class LoginForm extends GUI {
       }
     );
 
-    loginButton.setBounds(110, 100, 80, 25);
+    loginButton.setBounds(240, 100, 80, 25);
     add(loginButton);
 
     status = new JLabel("");
-    status.setBounds(100, 130, 100, 25);
+    status.setBounds(250, 130, 100, 25);
     add(status);
   }
 }
