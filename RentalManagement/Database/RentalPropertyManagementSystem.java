@@ -90,12 +90,7 @@ public class RentalPropertyManagementSystem {
 			String query = "DELETE FROM properties WHERE ";
 			PreparedStatement myStmt = dbConnect.prepareStatement(query);
 			myStmt.setString(1, owner);
-			myStmt.setString(2, type);
-			myStmt.setInt(3, bedrooms);
-			myStmt.setInt(4, bathrooms);
-			myStmt.setString(5, furnished);
-			myStmt.setString(6, quadrant);
-			myStmt.setString(9, address);
+			myStmt.setString(2, address);
 			myStmt.execute();
 			myStmt.close();
 			return true;
@@ -105,9 +100,6 @@ public class RentalPropertyManagementSystem {
 		}
 	}
 	
-	public boolean changeState(String Address, String state){
-		
-	}
 
 	public boolean updateFeeData(int amount, int period) {
 		try {
