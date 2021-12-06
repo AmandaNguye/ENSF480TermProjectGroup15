@@ -40,12 +40,22 @@ CREATE TABLE PROPERTIES (
 
 INSERT INTO PROPERTIES (address, owner, type, bedrooms, bathrooms, furnished, quadrant, status, expirydate)
 VALUES
-    ('111 North ST',        'moussavifan',   'apartment',	        1,	2,	1,	'NE',	'active', '2022-1-1'),
-    ('23 North Blvd',       'moussavifan',   'apartment',	        1,	2,	1,	'NE',	'active', '2022-1-1'),
-    ('100 St Albert Rd',    'moussavifan',   'attached house',	    1,	2,	1,	'NW',	'active', '2022-1-1'),
-    ('22 Shawnnesay Rd',    'moussavifan',   'attached house',	    1,	2,	1,	'NW',	'active', '2022-1-1'),
-    ('33 Chinook Hhwy',     'moussavifan',   'townhouse',	        1,	2,	1,	'SE',	'active', '2022-1-1'),
-    ('1 St SE',             'moussavifan',   'townhouse',	        1,	2,	1,	'SW',	'active', '2022-1-1');
+    ('111 North ST',        'moussavifan',   'apartment',	        1,	2,	1,	'NE',	'active',   '2022-1-1'),
+    ('23 North Blvd',       'moussavifan',   'apartment',	        1,	1,	1,	'NE',	'active',   '2021-11-1'),
+    ('100 St Albert Rd',    'moussavifan',   'attached house',	    4,	5,	0,	'NW',	'active',   '2022-1-1'),
+    ('22 Shawnnesay Rd',    'moussavifan',   'attached house',	    4,	6,	1,	'NW',	'occupied', '2022-1-1'),
+    ('33 Chinook Hhwy',     'moussavifan',   'townhouse',	        6,	7,	1,	'SE',	'active',   '2022-1-1'),
+    ('1 St SE',             'moussavifan',   'townhouse',	        2,	3,	0,	'SW',	'active',   '2021-11-1'),
+    ('123 Fake St',         'landlord1',      'detached house',	    1,	3,	0,	'NE',	'occupied', '2022-1-1'),
+    ('401 Error Blvd',      'landlord1',      'attached house',	    4,	4,	1,	'SE',	'active',   '2022-1-1'),
+    ('420 Lit Rd',          'landlord1',      'townhouse',	        3,	4,	1,	'SE',	'active',   '2021-11-1'),
+    ('69 Nice River',       'landlord1',      'attached house',	    1,	2,	0,	'NE',	'active',   '2022-1-1'),
+    ('100 Uni Death Way',   'landlord1',      'detached house',	    1,	1,	1,	'SW',	'active',   '2022-1-1'),
+    ('4 Gpa Park',          'landlord2',     'apartment',	        4,	5,	1,	'SW',	'occupied', '2021-11-1'),
+    ('87 South Park',       'landlord2',      'apartment',	        4,	5,	1,	'SW',	'occupied', '2022-1-1'),
+    ('29 Ph Dee Highway',   'landlord2',      'detached house',	    1,	1,	0,	'SE',	'active',   '2022-1-1'),
+    ('21 Northmount Dr',    'landlord3',      'townhouse',	        2,	3,	0,	'NW',	'active',   '2021-11-1'),
+    ('2 St SW',             'moussavifan',   'townhouse',	        1,	2,	1,	'SW',	'active',   '2022-1-1');
 
 DROP TABLE IF EXISTS FEEINFO;
 CREATE TABLE FEEINFO (
