@@ -41,9 +41,9 @@ CREATE TABLE PROPERTIES (
 
 INSERT INTO PROPERTIES (address, owner, type, bedrooms, bathrooms, furnished, quadrant, status, expirydate)
 VALUES
-    ('funkyhouse',          'moussavifan',   'apartment',	        1,	2,	1,	'NE',	'active', '2021-12-12'),
-    ('nice apartment',      'moussavifan',   'apartment',	        1,	2,	1,	'NE',	'active', '2021-12-12'),
-    ('my doghouse',         'moussavifan',   'attached house',	    1,	2,	1,	'NW',	'active', '2021-12-12'),
-    ('plsrentthishouse',    'moussavifan',   'attached house',	    1,	2,	1,	'NW',	'active', '2021-12-12'),
-    ('townhousekensignton', 'moussavifan',   'townhouse',	        1,	2,	1,	'SE',	'active', '2021-12-12'),
-    ('universityofcalgary', 'moussavifan',   'townhouse',	        1,	2,	1,	'SW',	'active', '2021-12-12');
+    ('111 North ST',        'moussavifan',   'apartment',	        1,	2,	1,	'NE',	'active', '2022-1-1'),
+    ('23 North Blvd',       'moussavifan',   'apartment',	        1,	2,	1,	'NE',	'active', '2022-1-1'),
+    ('100 St Albert Rd',    'moussavifan',   'attached house',	    1,	2,	1,	'NW',	'active', '2022-1-1'),
+    ('22 Shawnnesay Rd',    'moussavifan',   'attached house',	    1,	2,	1,	'NW',	'active', '2022-1-1'),
+    ('33 Chinook Hhwy',     'moussavifan',   'townhouse',	        1,	2,	1,	'SE',	'active', '2022-1-1'),
+    ('1 St SE',             'moussavifan',   'townhouse',	        1,	2,	1,	'SW',	'active', '2022-1-1');
