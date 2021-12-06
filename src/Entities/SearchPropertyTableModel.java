@@ -62,9 +62,10 @@ public class SearchPropertyTableModel extends AbstractTableModel {
         return tempProperty.getAddress();
     }
   }
-
+  /*
   @Override
   public Class getColumnClass(int c) {
     return getValueAt(0, c).getClass();
   }
+  */
 }
