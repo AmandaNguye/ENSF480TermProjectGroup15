@@ -65,6 +65,17 @@ public class RentalDatabaseObject {
     }
   }
 
+  public ResultSet getFeeData() {
+		try {
+			String query = "select @amount, @period";
+			PreparedStatement myStmt = dbConnect.prepareStatement(query);
+			return myStmt.executeQuery();
+		} catch (SQLException e) {
+			e.printStackTrace();
+			return null;
+		}
+	}
+
   public void enterUser(User newUser) throws Exception {
     PreparedStatement query = null;
     ResultSet results = null;
