@@ -78,9 +78,10 @@ public class PropertyTableModel extends AbstractTableModel {
         return tempProperty.getAddress();
     }
   }
-
-  @Override
-  public Class getColumnClass(int c) {
-    return getValueAt(0, c).getClass();
+  /*
+ @Override
+ public Class getColumnClass(int c) {
+   return getValueAt(0, c).getClass();
   }
+ */
 }
