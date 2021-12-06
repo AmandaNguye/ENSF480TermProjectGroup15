@@ -7,6 +7,9 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.time.LocalDate;
+import java.util.ArrayList;
+
+import RentalManagement.Property.Property;
 
 public class RentalPropertyManagementSystem {
 	private Connection dbConnect;
@@ -35,7 +38,7 @@ public class RentalPropertyManagementSystem {
 			myStmt.setString(1, username);
 			myStmt.setString(2, password);
 			ResultSet results = myStmt.executeQuery();
-			if(!results.next()) {
+			if (!results.next()) {
 				return null;
 			}
 			return results.getString("accounttype");
@@ -61,7 +64,8 @@ public class RentalPropertyManagementSystem {
 		}
 	}
 
-	public boolean registerProperty(String owner, String type, int bedrooms, int bathrooms, String furnished, String quadrant, String address) {
+	public boolean registerProperty(String owner, String type, int bedrooms, int bathrooms, String furnished,
+			String quadrant, String address) {
 		try {
 			String query = "INSERT INTO properties(owner, type, bedrooms, bathrooms, furnished, quadrant, daysleft, address, status) VALUES (?, ?, ?, ?, ?, ?,'0000-00-00', ?, 'suspended')";
 			PreparedStatement myStmt = dbConnect.prepareStatement(query);
@@ -81,6 +85,30 @@ public class RentalPropertyManagementSystem {
 		}
 	}
 	
+	public boolean deleteProperty(String owner, String address) {
+		try {
+			String query = "DELETE FROM properties WHERE ";
+			PreparedStatement myStmt = dbConnect.prepareStatement(query);
+			myStmt.setString(1, owner);
+			myStmt.setString(2, type);
+			myStmt.setInt(3, bedrooms);
+			myStmt.setInt(4, bathrooms);
+			myStmt.setString(5, furnished);
+			myStmt.setString(6, quadrant);
+			myStmt.setString(9, address);
+			myStmt.execute();
+			myStmt.close();
+			return true;
+		} catch (SQLException e) {
+			e.printStackTrace();
+			return false;
+		}
+	}
+	
+	public boolean changeState(String Address, String state){
+		
+	}
+
 	public boolean updateFeeData(int amount, int period) {
 		try {
 			String query = "set @amount = ?, @period = ?";
@@ -95,7 +123,7 @@ public class RentalPropertyManagementSystem {
 			return false;
 		}
 	}
-	
+
 	public ResultSet getFeeData() {
 		try {
 			String query = "select @amount, @period";
@@ -106,8 +134,8 @@ public class RentalPropertyManagementSystem {
 			return null;
 		}
 	}
-	
-	public ResultSet searchPropety(String type, int bedrooms, int bathrooms, String furnished, String quadrant) {
+
+	public ArrayList<Property> searchPropety(String type, int bedrooms, int bathrooms, String furnished, String quadrant) {
 		try {
 			String query = "SELECT * FROM properties WHERE type = ? AND bedrooms = ? AND bathrooms = ? ANDfurnished = ? AND quadrant = ? AND daysleft > ? AND status = active";
 			PreparedStatement myStmt = dbConnect.prepareStatement(query);
@@ -117,14 +145,14 @@ public class RentalPropertyManagementSystem {
 			myStmt.setString(4, furnished);
 			myStmt.setString(5, quadrant);
 			myStmt.setDate(6, Date.valueOf(LocalDate.now()));
-			return myStmt.executeQuery();
+			return parsePropertyResultSet(myStmt.executeQuery());
 		} catch (SQLException e) {
 			e.printStackTrace();
 			return null;
 		}
 	}
-	
-	public boolean sendMessage(String receiverUsername, String message){
+
+	public boolean sendMessage(String receiverUsername, String message) {
 		try {
 			String query = "INSERT INTO MESSAGES(receiver, message) VALUES (?, ?)";
 			PreparedStatement myStmt = dbConnect.prepareStatement(query);
@@ -138,36 +166,36 @@ public class RentalPropertyManagementSystem {
 			return false;
 		}
 	}
-	
-	public ResultSet getMessages(String username){
+
+	public ResultSet getMessages(String username) {
 		try {
-			String query = "SELECT * FROM MESSAGES WHERE receiver = ?";
+			String query = "SELECT message FROM MESSAGES WHERE receiver = ?";
 			PreparedStatement myStmt = dbConnect.prepareStatement(query);
 			myStmt.setString(1, username);
 			ResultSet results = myStmt.executeQuery();
-			if(!results.next()) {
+			if (!results.next()) {
 				return null;
 			}
-			
+
 			query = "DELETE FROM MESSAGES WHERE receiver = ?";
 			myStmt = dbConnect.prepareStatement(query);
 			myStmt.setString(1, username);
 			myStmt.execute();
 			myStmt.close();
-		
+
 			return results;
 		} catch (SQLException e) {
 			e.printStackTrace();
 			return null;
 		}
 	}
-	
-	public boolean subscribe(String type, int bedrooms, int bathrooms, String furnished, String quadrant){
+
+	public boolean subscribe(String type, int bedrooms, int bathrooms, String furnished, String quadrant) {
 		try {
 			String query = "INSERT INTO MESSAGES(receiver, message) VALUES (?, ?)";
 			PreparedStatement myStmt = dbConnect.prepareStatement(query);
-			myStmt.setString(1, receiverUsername);
-			myStmt.setString(2, message);
+//			myStmt.setString(1, receiverUsername);
+//			myStmt.setString(2, message);
 			myStmt.execute();
 			myStmt.close();
 			return true;
@@ -175,6 +203,24 @@ public class RentalPropertyManagementSystem {
 			e.printStackTrace();
 			return false;
 		}
+	}
+
+	public ArrayList<Property> parsePropertyResultSet(ResultSet results) throws SQLException {
+		ArrayList<Property> data = new ArrayList<Property>();
+		while (results.next()) {
+			data.add(new Property(results.getInt("id"), results.getString("owner"), results.getString("address"),
+					results.getString("type"), results.getInt("bedrooms"), results.getInt("bathrooms"),
+					results.getBoolean("furnished"), results.getString("quadrant"), results.getDate("dayslest").toLocalDate(), results.getString("state")));
+		}
+		return data;
+	}
+	
+	public ArrayList<String> parseMessagesResultSet(ResultSet results) throws SQLException {
+		ArrayList<String> data = new ArrayList<String>();
+		while (results.next()) {
+			data.add(results.getString("message"));
+		}
+		return data;
 	}
 
 	public static void main(String args[]) {

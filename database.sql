@@ -35,23 +35,23 @@ CREATE TABLE PROPERTIES (
     type        VARCHAR(150) NOT NULL,
     bedrooms    INT unsigned NOT NULL,
     bathrooms   INT unsigned NOT NULL,
-    furnished   VARCHAR(150) NOT NULL,
+    furnished   BOOLEAN NOT NULL,
     quadrant    VARCHAR(150) NOT NULL,
     daysleft    DATE NOT NULL,
-    occupied    VARCHAR(150) NOT NULL,
+    dateposted  DATE NOT NULL,
     state    	VARCHAR(150) NOT NULL,
     PRIMARY KEY (id),
 	FOREIGN KEY (owner) REFERENCES USERS(username) ON UPDATE CASCADE
 );
 
-INSERT INTO PROPERTIES (owner, type, bedrooms, bathrooms, furnished, quadrant, daysleft, occupied, address)
+INSERT INTO PROPERTIES (owner, type, bedrooms, bathrooms, furnished, quadrant, daysleft, address, state, dateposted)
 VALUES
-    ('landlord1',   'apartment',	    1,	2,	'yes',	'NE',	60, 'no', '123 street', 'active'),
-    ('landlord1',   'apartment',	    1,	2,	'yes',	'NE',	60, 'no', '124 street', 'rented'),
-    ('landlord2',   'attached house',	1,	2,	'yes',	'NW',	60, 'no', '125 street', 'cancelled'),
-    ('landlord2',   'attached house',	1,	2,	'yes',	'NW',	60, 'no', '126 street', 'suspended'),
-    ('landlord3',   'townhouse',	    1,	2,	'yes',	'SE',	60, 'no', '127 street', 'active'),
-    ('landlord3',   'townhouse',	    1,	2,	'yes',	'SW',	60, 'no', '128 street', 'active');
+    ('landlord1',   'apartment',	    1,	2,	true,	'NE',	'2021-12-27', 	'123 street', 'active', 	'2021-11-1'),
+    ('landlord1',   'apartment',	    1,	2,	false,	'NE',	'2021-12-28', 	'124 street', 'rented', 	'2021-11-27'),
+    ('landlord2',   'attached house',	1,	2,	true,	'NW',	'2021-12-29', 	'125 street', 'cancelled', 	'2021-11-28'),
+    ('landlord2',   'attached house',	1,	2,	false,	'NW',	'2021-12-26', 	'126 street', 'suspended', 	'2021-11-29'),
+    ('landlord3',   'townhouse',	    1,	2,	true,	'SE',	'2021-12-25', 	'127 street', 'active', 	'2021-11-26'),
+    ('landlord3',   'townhouse',	    1,	2,	false,	'SW',	'2021-12-1', 	'128 street', 'active', 	'2021-11-25');
 
     
 DROP TABLE IF EXISTS MESSAGES;
@@ -71,6 +71,6 @@ CREATE TABLE SUBSCRIPTIONS (
     furnished   		VARCHAR(150) NOT NULL,
     quadrant    		VARCHAR(150) NOT NULL,
     datesubscribed   	DATE NOT NULL,
-	FOREIGN KEY (receiver) REFERENCES USERS(username) ON UPDATE CASCADE
+	FOREIGN KEY (renter) REFERENCES USERS(username) ON UPDATE CASCADE
 );
 
