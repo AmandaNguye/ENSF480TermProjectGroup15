@@ -16,7 +16,7 @@ public class LandlordMenu extends Menu {
     super("Landlord Menu");
     greeting.setText("Welcome " + user);
     this.add(greeting);
-    panel1 = new RegisterPropertyForm();
+    panel1 = new RegisterPropertyForm(user);
     panel2 = new PayFeesForm();
     panel3 = new ManageStateListingForm();
     tabs.add("Register a New Property", panel1);

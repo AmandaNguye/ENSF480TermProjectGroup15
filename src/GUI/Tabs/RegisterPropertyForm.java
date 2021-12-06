@@ -1,6 +1,9 @@
 package src.GUI.Tabs;
 
+import java.awt.event.*;
+import java.util.List;
 import javax.swing.*;
+import src.Entities.*;
 
 public class RegisterPropertyForm extends GUI {
 
@@ -16,11 +19,11 @@ public class RegisterPropertyForm extends GUI {
   private JCheckBox furnishedBox;
   private JLabel quadrantLabel;
   private JComboBox<String> quadrantBox;
-  private JButton RegisterButton;
+  private JButton registerButton;
 
   //private JLabel status;
 
-  public RegisterPropertyForm() {
+  public RegisterPropertyForm(String user) {
     super();
     nameLabel = new JLabel("Title:");
     nameLabel.setBounds(80, 20, 80, 25);
@@ -52,10 +55,10 @@ public class RegisterPropertyForm extends GUI {
     String[] quadrant = { "NE", "NW", "SE", "SW" };
     quadrantBox = new JComboBox<String>(quadrant);
     quadrantBox.setBounds(350, 50, 100, 25);
-    String[] bedrooms = { "1", "2", "3", "4", "5", "6", "7" };
+    String[] bedrooms = { "0", "1", "2", "3", "4", "5", "6", "7" };
     bedroomsBox = new JComboBox<String>(bedrooms);
     bedroomsBox.setBounds(150, 80, 100, 25);
-    String[] bathrooms = { "1", "2", "3", "4", "5", "6", "7" };
+    String[] bathrooms = { "0", "1", "2", "3", "4", "5", "6", "7" };
     bathroomsBox = new JComboBox<String>(bathrooms);
     bathroomsBox.setBounds(350, 80, 100, 25);
     furnishedBox = new JCheckBox();
@@ -72,8 +75,64 @@ public class RegisterPropertyForm extends GUI {
     add(quadrantLabel);
     add(quadrantBox);
 
-    RegisterButton = new JButton("Register");
-    RegisterButton.setBounds(250, 150, 100, 25);
-    add(RegisterButton);
+    registerButton = new JButton("Register");
+    registerButton.addActionListener(
+      new ActionListener() {
+        public void actionPerformed(ActionEvent e) {
+          try {
+            String name = nameText.getText();
+            String type = typeBox.getSelectedItem().toString().toLowerCase();
+            int bedrooms = Integer.parseInt(
+              bedroomsBox.getSelectedItem().toString()
+            );
+            int bathrooms = Integer.parseInt(
+              bathroomsBox.getSelectedItem().toString()
+            );
+            String quadrant = quadrantBox.getSelectedItem().toString();
+            Boolean furnished = furnishedBox.isSelected();
+
+            if (name == null || name.trim().length() == 0) {
+              JOptionPane.showMessageDialog(null, "Name field empty.");
+            } else {
+              List<Property> tempProperties = rentalDAO.searchPropertyName(
+                name
+              );
+              if (tempProperties.size() != 0) {
+                JOptionPane.showMessageDialog(null, "Name is taken.");
+              } else {
+                rentalDAO.enterProperty(
+                  new Property(
+                    0,
+                    name,
+                    user,
+                    type,
+                    bedrooms,
+                    bathrooms,
+                    furnished,
+                    quadrant,
+                    "inactive",
+                    java.time.LocalDate.now().toString()
+                  )
+                );
+                JOptionPane.showMessageDialog(
+                  null,
+                  "User Successfully Entered! Please Login."
+                );
+              }
+            }
+          } catch (Exception exc) {
+            JOptionPane.showMessageDialog(
+              RegisterPropertyForm.this,
+              "Error: " + exc,
+              "Error",
+              JOptionPane.ERROR_MESSAGE
+            );
+          }
+        }
+      }
+    );
+
+    registerButton.setBounds(250, 150, 100, 25);
+    add(registerButton);
   }
 }

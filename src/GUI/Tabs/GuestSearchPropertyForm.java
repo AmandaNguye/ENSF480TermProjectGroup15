@@ -21,7 +21,8 @@ public class GuestSearchPropertyForm extends GUI {
   private JButton searchButton;
   private JScrollPane scrollPane;
   private JTable propertyTable;
-  private JLabel status;
+
+  //private JLabel status;
 
   public GuestSearchPropertyForm() {
     super();

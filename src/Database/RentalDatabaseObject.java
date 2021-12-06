@@ -115,6 +115,27 @@ public class RentalDatabaseObject {
     }
   }
 
+  public List<Property> searchPropertyName(String name) throws Exception {
+    List<Property> list = new ArrayList<>();
+
+    PreparedStatement query = null;
+    ResultSet results = null;
+
+    try {
+      query = myConn.prepareStatement("SELECT * FROM properties WHERE name=?");
+      query.setString(1, name);
+
+      results = query.executeQuery();
+      while (results.next()) {
+        Property tempProperty = convertRowToProperty(results);
+        list.add(tempProperty);
+      }
+      return list;
+    } finally {
+      close(query, results);
+    }
+  }
+
   public List<Property> searchProperties(
     String type,
     int bedrooms,
@@ -189,6 +210,36 @@ public class RentalDatabaseObject {
     );
 
     return tempProperty;
+  }
+
+  public void enterProperty(Property newProperty) throws Exception {
+    PreparedStatement query = null;
+    ResultSet results = null;
+
+    try {
+      query =
+        myConn.prepareStatement(
+          "INSERT INTO properties (name, owner, type, bedrooms, bathrooms, furnished, quadrant, status, expirydate) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?)"
+        );
+      query.setString(1, newProperty.getName());
+      query.setString(2, newProperty.getOwner());
+      query.setString(3, newProperty.getType());
+      query.setInt(4, newProperty.getBedrooms());
+      query.setInt(5, newProperty.getBathrooms());
+
+      int furnishedint = 0;
+      if (newProperty.isFurnished()) furnishedint = 1;
+      query.setInt(6, furnishedint);
+
+      query.setString(7, newProperty.getQuadrant());
+      query.setString(8, newProperty.getStatus());
+      query.setString(9, newProperty.getExpirydate());
+      System.out.println(query.toString());
+      int rowcount = query.executeUpdate();
+      System.out.println("Success - " + rowcount + " rows affected.");
+    } finally {
+      close(query, results);
+    }
   }
 
   private static void close(
