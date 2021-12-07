@@ -78,13 +78,13 @@ public class ManageStateListingForm extends GUI {
                   null,
                   "The listing cannot be 'active' since it requires payment first."
                 );
+              } else {
+                rentalDAO.changePropertyStatus(address, status);
+                JOptionPane.showMessageDialog(
+                  null,
+                  "Status Updated!Click 'Refresh Statuses' to refresh the statuses."
+                );
               }
-            } else {
-              rentalDAO.changePropertyStatus(address, status);
-              JOptionPane.showMessageDialog(
-                null,
-                "Status Updated!Click 'Refresh Statuses' to refresh the statuses."
-              );
             }
           } catch (Exception exc) {
             JOptionPane.showMessageDialog(

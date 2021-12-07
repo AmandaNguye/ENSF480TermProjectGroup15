@@ -12,6 +12,7 @@ import src.Entities.*;
 public class RentalDatabaseObject {
 
   private Connection myConn;
+  private static boolean logsInitialized = false;
 
   public RentalDatabaseObject() throws Exception {
     // get db properties
@@ -26,6 +27,10 @@ public class RentalDatabaseObject {
     myConn = DriverManager.getConnection(dburl, user, password);
 
     System.out.println("DB connection successful to: " + dburl);
+    if (!logsInitialized) {
+      initializeLogs();
+      logsInitialized = true;
+    }
   }
 
   public List<User> getAllUsers() throws Exception {
@@ -55,7 +60,7 @@ public class RentalDatabaseObject {
     ResultSet results = null;
 
     try {
-      query = myConn.prepareStatement("SELECT * FROM users WHERE username=?");
+      query = myConn.prepareStatement("SELECT * FROM users WHERE username = ?");
       query.setString(1, username);
 
       results = query.executeQuery();
@@ -127,7 +132,7 @@ public class RentalDatabaseObject {
     ResultSet results = null;
 
     try {
-      query = myConn.prepareStatement("SELECT * FROM properties WHERE id=?");
+      query = myConn.prepareStatement("SELECT * FROM properties WHERE id = ?");
       query.setInt(1, id);
 
       results = query.executeQuery();
@@ -147,7 +152,7 @@ public class RentalDatabaseObject {
 
     try {
       query =
-        myConn.prepareStatement("SELECT * FROM properties WHERE address=?");
+        myConn.prepareStatement("SELECT * FROM properties WHERE address = ?");
       query.setString(1, address);
 
       results = query.executeQuery();
@@ -167,7 +172,9 @@ public class RentalDatabaseObject {
 
     try {
       query =
-        myConn.prepareStatement("SELECT owner FROM properties WHERE address=?");
+        myConn.prepareStatement(
+          "SELECT owner FROM properties WHERE address = ?"
+        );
       query.setString(1, address);
 
       results = query.executeQuery();
@@ -188,7 +195,7 @@ public class RentalDatabaseObject {
 
     try {
       query =
-        myConn.prepareStatement("SELECT * FROM properties WHERE address=?");
+        myConn.prepareStatement("SELECT * FROM properties WHERE address = ?");
       query.setString(1, address);
 
       results = query.executeQuery();
@@ -251,7 +258,8 @@ public class RentalDatabaseObject {
     ResultSet results = null;
 
     try {
-      query = myConn.prepareStatement("SELECT * FROM emails WHERE receiver=?");
+      query =
+        myConn.prepareStatement("SELECT * FROM emails WHERE receiver = ?");
       query.setString(1, user);
 
       results = query.executeQuery();
@@ -277,7 +285,8 @@ public class RentalDatabaseObject {
     ResultSet results = null;
 
     try {
-      query = myConn.prepareStatement("SELECT * FROM properties WHERE owner=?");
+      query =
+        myConn.prepareStatement("SELECT * FROM properties WHERE owner = ?");
       query.setString(1, landlord);
 
       results = query.executeQuery();
@@ -369,11 +378,9 @@ public class RentalDatabaseObject {
     throws Exception {
     PreparedStatement query = null;
     ResultSet results = null;
+    String originalStatus = getProperty(address).getStatus();
 
-    if (
-      !status.equals("active") &&
-      getProperty(address).getStatus().equals("active")
-    ) {
+    if (!status.equals("active") && originalStatus.equals("active")) {
       pruneNotifications(getProperty(address));
     }
     try {
@@ -386,10 +393,11 @@ public class RentalDatabaseObject {
       System.out.println(query.toString());
       int rowcount = query.executeUpdate();
       System.out.println("Success - " + rowcount + " rows affected.");
+      addLog(getProperty(address));
     } finally {
       close(query, results);
     }
-    if (status.equals("active")) {
+    if (status.equals("active") && !originalStatus.equals("active")) {
       notifySubscription(getProperty(address));
     }
     updateAllPropertyStatus();
@@ -398,7 +406,24 @@ public class RentalDatabaseObject {
   private void updateAllPropertyStatus() throws Exception {
     PreparedStatement query = null;
     ResultSet results = null;
-
+    try {
+      query =
+        myConn.prepareStatement(
+          "SELECT * FROM properties WHERE status = 'active' AND expirydate <= ?"
+        );
+      query.setString(1, java.time.LocalDate.now().toString());
+      System.out.println(query.toString());
+      results = query.executeQuery();
+      while (results.next()) {
+        Property tempProperty = convertRowToProperty(results);
+        notifySubscription(tempProperty);
+        addLog(tempProperty, "payment required");
+      }
+    } finally {
+      close(query, results);
+    }
+    query = null;
+    results = null;
     try {
       query =
         myConn.prepareStatement(
@@ -424,6 +449,7 @@ public class RentalDatabaseObject {
       while (results.next()) {
         Property tempProperty = convertRowToProperty(results);
         notifySubscription(tempProperty);
+        addLog(tempProperty, "active");
       }
     } finally {
       close(query, results);
@@ -659,7 +685,8 @@ public class RentalDatabaseObject {
     ResultSet results = null;
 
     try {
-      query = myConn.prepareStatement("SELECT * FROM subscriptions WHERE id=?");
+      query =
+        myConn.prepareStatement("SELECT * FROM subscriptions WHERE id = ?");
       query.setInt(1, id);
 
       results = query.executeQuery();
@@ -714,7 +741,7 @@ public class RentalDatabaseObject {
     try {
       query =
         myConn.prepareStatement(
-          "DELETE FROM notifications WHERE lisintgid = " + property.getId()
+          "DELETE FROM notifications WHERE listingid = " + property.getId()
         );
       System.out.println(query.toString());
       int rowcount = query.executeUpdate();
@@ -792,7 +819,7 @@ public class RentalDatabaseObject {
 
     try {
       query =
-        myConn.prepareStatement("SELECT * FROM notifications WHERE renter=?");
+        myConn.prepareStatement("SELECT * FROM notifications WHERE renter = ?");
       query.setString(1, renter);
 
       results = query.executeQuery();
@@ -866,6 +893,125 @@ public class RentalDatabaseObject {
       System.out.println(query.toString());
       int rowcount = query.executeUpdate();
       System.out.println("Success - " + rowcount + " rows affected.");
+    } finally {
+      close(query, results);
+    }
+  }
+
+  public void initializeLogs() throws Exception {
+    List<Property> list = getAllProperties();
+    for (Property p : list) {
+      if (getNumberOfPropertyLogs(p) == 0) addLog(p);
+    }
+  }
+
+  private void addLog(Property property) throws Exception {
+    PreparedStatement query = null;
+    ResultSet results = null;
+
+    try {
+      query =
+        myConn.prepareStatement(
+          "INSERT INTO propertylogs (listingid, statuschange, logdate) VALUES (?, ?, ?)"
+        );
+      query.setInt(1, property.getId());
+      query.setString(2, property.getStatus());
+      query.setString(3, java.time.LocalDate.now().toString());
+      System.out.println(query.toString());
+      int rowcount = query.executeUpdate();
+      System.out.println("Success - " + rowcount + " rows affected.");
+    } finally {
+      close(query, results);
+    }
+  }
+
+  private void addLog(Property property, String statuschange) throws Exception {
+    PreparedStatement query = null;
+    ResultSet results = null;
+
+    try {
+      query =
+        myConn.prepareStatement(
+          "INSERT INTO propertylogs (listingid, statuschange, logdate) VALUES (?, ?, ?)"
+        );
+      query.setInt(1, property.getId());
+      query.setString(2, statuschange);
+      query.setString(3, java.time.LocalDate.now().toString());
+      System.out.println(query.toString());
+      int rowcount = query.executeUpdate();
+      System.out.println("Success - " + rowcount + " rows affected.");
+    } finally {
+      close(query, results);
+    }
+  }
+
+  private int getNumberOfPropertyLogs(Property property) throws Exception {
+    int number = 0;
+    PreparedStatement query = null;
+    ResultSet results = null;
+
+    try {
+      query =
+        myConn.prepareStatement(
+          "SELECT * FROM propertylogs WHERE listingid = ?"
+        );
+      query.setInt(1, property.getId());
+
+      results = query.executeQuery();
+      while (results.next()) {
+        number++;
+      }
+      return number;
+    } finally {
+      close(query, results);
+    }
+  }
+
+  public List<Property> getPeriodLogs(String statuschange, int perioddays)
+    throws Exception {
+    List<Property> list = new ArrayList<>();
+
+    PreparedStatement query = null;
+    ResultSet results = null;
+
+    try {
+      query =
+        myConn.prepareStatement(
+          "SELECT * FROM propertylogs WHERE statuschange = ? AND logdate >= ?"
+        );
+      query.setString(1, statuschange);
+      query.setString(
+        2,
+        java.time.LocalDate.now().minusDays(perioddays).toString()
+      );
+
+      results = query.executeQuery();
+      while (results.next()) {
+        Property tempProperty = getProperty(results.getInt("listingid"));
+        list.add(tempProperty);
+      }
+      return list;
+    } finally {
+      close(query, results);
+    }
+  }
+
+  public List<Property> getProperties(String status) throws Exception {
+    List<Property> list = new ArrayList<>();
+    PreparedStatement query = null;
+    ResultSet results = null;
+
+    try {
+      query =
+        myConn.prepareStatement("SELECT * FROM properties WHERE status = ?");
+      query.setString(1, status);
+
+      results = query.executeQuery();
+      while (results.next()) {
+        Property tempProperty = convertRowToProperty(results);
+        list.add(tempProperty);
+      }
+      return list;
     } finally {
       close(query, results);
     }
