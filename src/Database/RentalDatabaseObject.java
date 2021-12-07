@@ -311,7 +311,7 @@ public class RentalDatabaseObject {
         myConn.prepareStatement(
           "UPDATE properties SET expirydate = ? WHERE address = ?"
         );
-      DateFormat formatter = new SimpleDateFormat("yyyy-mm-dd");
+      DateFormat formatter = new SimpleDateFormat("yyyy-MM-dd");
       Date tempDate = formatter.parse(orignalExpiry);
       LocalDate newDate = new java.sql.Date(tempDate.getTime()).toLocalDate();
       String newExpiry = String.valueOf(newDate.plusDays(extendedDays));
@@ -406,7 +406,7 @@ public class RentalDatabaseObject {
     try {
       query =
         myConn.prepareStatement(
-          "INSERT INTO properties (name, owner, type, bedrooms, bathrooms, furnished, quadrant, status, expirydate) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?)"
+          "INSERT INTO properties (address, owner, type, bedrooms, bathrooms, furnished, quadrant, status, expirydate) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?)"
         );
       query.setString(1, newProperty.getAddress());
       query.setString(2, newProperty.getOwner());

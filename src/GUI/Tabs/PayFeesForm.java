@@ -73,7 +73,7 @@ public class PayFeesForm extends GUI {
             propertyTable.getValueAt(propertyTable.getSelectedRow(), 1)
           );
           try {
-            DateFormat formatter = new SimpleDateFormat("yyyy-mm-dd");
+            DateFormat formatter = new SimpleDateFormat("yyyy-MM-dd");
             Date tempDate = formatter.parse(expiry);
             LocalDate newDate = new java.sql.Date(tempDate.getTime())
               .toLocalDate();

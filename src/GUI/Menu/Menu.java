@@ -18,7 +18,6 @@ public class Menu extends JFrame {
     setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
     setSize(600, 600);
     greeting = new JLabel();
-    greeting.setText("Rental Management Property System");
     greeting.setFont(new Font("Arial", Font.BOLD, 20));
     greeting.setBounds(20, 10, 400, 50);
     tabs = new JTabbedPane();
