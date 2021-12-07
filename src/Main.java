@@ -56,14 +56,25 @@ public class Main extends JFrame {
    */
   /**
    * Launch the application.
+   * @throws Exception
    */
-  public static void main(String[] args) {
+  public static void main(String[] args) throws Exception {
     EventQueue.invokeLater(
       new Runnable() {
         public void run() {
           try {
-            Menu frame = new GuestMenu();
-            frame.setVisible(true);
+            Boolean testing = true;
+            if (!testing) {
+              Menu frame = new GuestMenu();
+              frame.setVisible(true);
+            } else {
+              Menu frame1 = new LandlordMenu("moussavifan");
+              frame1.setVisible(true);
+              Menu frame2 = new RenterMenu("renter1");
+              frame2.setVisible(true);
+              Menu frame3 = new ManagerMenu("manager");
+              frame3.setVisible(true);
+            }
           } catch (Exception e) {
             e.printStackTrace();
           }
