@@ -110,13 +110,13 @@ public class RegisterPropertyForm extends GUI {
                     bathrooms,
                     furnished,
                     quadrant,
-                    "suspended",
+                    "payment required",
                     java.time.LocalDate.now().toString()
                   )
                 );
                 JOptionPane.showMessageDialog(
                   null,
-                  "User Successfully Entered! Please Login."
+                  "User Successfully Registered! Status 'payment required'. Please pay fees to set it to active."
                 );
               }
             }

@@ -8,7 +8,7 @@ import src.Entities.*;
 
 public class ViewEmailWindow extends GUI {
 
-  private JButton viewUsersButton;
+  private JButton viewEmailsButton;
   private JScrollPane scrollPane;
   private JTable emailTable;
   private JButton deleteEmailButton;
@@ -16,13 +16,13 @@ public class ViewEmailWindow extends GUI {
 
   public ViewEmailWindow(String user) {
     super();
-    viewUsersButton = new JButton("Show Emails");
-    viewUsersButton.addActionListener(
+    viewEmailsButton = new JButton("Show Emails");
+    viewEmailsButton.addActionListener(
       new ActionListener() {
         public void actionPerformed(ActionEvent e) {
           deleteEmailButton.setVisible(true);
           respondButton.setVisible(true);
-          viewUsersButton.setText("Refresh Emails");
+          viewEmailsButton.setText("Refresh Emails");
           List<Email> emails = null;
           try {
             emails = rentalDAO.getUserEmails(user);
@@ -97,8 +97,8 @@ public class ViewEmailWindow extends GUI {
     respondButton.setBounds(300, 295, 140, 25);
     respondButton.setVisible(false);
     add(respondButton);
-    viewUsersButton.setBounds(200, 40, 130, 25);
-    add(viewUsersButton);
+    viewEmailsButton.setBounds(200, 40, 130, 25);
+    add(viewEmailsButton);
     scrollPane = new JScrollPane();
     scrollPane.setHorizontalScrollBarPolicy(
       JScrollPane.HORIZONTAL_SCROLLBAR_AS_NEEDED

@@ -73,7 +73,7 @@ public class PayFeesForm extends GUI {
             propertyTable.getValueAt(propertyTable.getSelectedRow(), 1)
           );
           try {
-            DateFormat formatter = new SimpleDateFormat("yyyy-mm-dd");
+            DateFormat formatter = new SimpleDateFormat("yyyy-MM-dd");
             Date tempDate = formatter.parse(expiry);
             LocalDate newDate = new java.sql.Date(tempDate.getTime())
               .toLocalDate();
@@ -120,7 +120,7 @@ public class PayFeesForm extends GUI {
               rentalDAO.changePropertyExpiry(address, expiry, daysExtended);
               JOptionPane.showMessageDialog(
                 null,
-                "Status Updated! Expired listings will not be changed to active until paid. Click 'Show Properties' to refresh the statuses."
+                "Status Updated! Expired listings will not be changed to active until paid. Click 'Refresh Statuses' to refresh the statuses."
               );
             }
           } catch (Exception exc) {

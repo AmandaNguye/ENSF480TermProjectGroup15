@@ -22,6 +22,7 @@ public class SearchPropertyForm extends GUI {
   private JScrollPane scrollPane;
   private JTable propertyTable;
   private JButton emailButton;
+  private JButton subscribeButton;
   private String landlord;
 
   //private JLabel status;
@@ -76,6 +77,7 @@ public class SearchPropertyForm extends GUI {
       new ActionListener() {
         public void actionPerformed(ActionEvent e) {
           emailButton.setVisible(true);
+          subscribeButton.setVisible(true);
           String type = typeBox.getSelectedItem().toString().toLowerCase();
           int bedrooms = Integer.parseInt(
             bedroomsBox.getSelectedItem().toString()
@@ -155,7 +157,48 @@ public class SearchPropertyForm extends GUI {
       }
     );
     emailButton.setVisible(false);
-    emailButton.setBounds(210, 400, 100, 25);
+    emailButton.setBounds(100, 400, 100, 25);
     add(emailButton);
+
+    subscribeButton = new JButton("Subscribe to Search");
+    subscribeButton.addActionListener(
+      new ActionListener() {
+        public void actionPerformed(ActionEvent e) {
+          String type = typeBox.getSelectedItem().toString().toLowerCase();
+          int bedrooms = Integer.parseInt(
+            bedroomsBox.getSelectedItem().toString()
+          );
+          int bathrooms = Integer.parseInt(
+            bathroomsBox.getSelectedItem().toString()
+          );
+          String quadrant = quadrantBox.getSelectedItem().toString();
+          Boolean furnished = furnishedBox.isSelected();
+          try {
+            rentalDAO.addSubscription(
+              user,
+              type,
+              bedrooms,
+              bathrooms,
+              quadrant,
+              furnished
+            );
+            JOptionPane.showMessageDialog(
+              null,
+              "Subscription added. You will be notified when new listings that match your criteria become active."
+            );
+          } catch (Exception exc) {
+            JOptionPane.showMessageDialog(
+              SearchPropertyForm.this,
+              "Error: " + exc,
+              "Error",
+              JOptionPane.ERROR_MESSAGE
+            );
+          }
+        }
+      }
+    );
+    subscribeButton.setVisible(false);
+    subscribeButton.setBounds(300, 400, 100, 25);
+    add(subscribeButton);
   }
 }
