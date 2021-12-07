@@ -120,7 +120,7 @@ public class PayFeesForm extends GUI {
               rentalDAO.changePropertyExpiry(address, expiry, daysExtended);
               JOptionPane.showMessageDialog(
                 null,
-                "Status Updated! Expired listings will not be changed to active until paid. Click 'Show Properties' to refresh the statuses."
+                "Status Updated! Expired listings will not be changed to active until paid. Click 'Refresh Statuses' to refresh the statuses."
               );
             }
           } catch (Exception exc) {
