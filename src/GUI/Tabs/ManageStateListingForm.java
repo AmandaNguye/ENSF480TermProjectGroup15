@@ -66,10 +66,24 @@ public class ManageStateListingForm extends GUI {
               statusOptions[0]
             );
             if (status != null) {
+              if (
+                String
+                  .valueOf(
+                    propertyTable.getValueAt(propertyTable.getSelectedRow(), 1)
+                  )
+                  .equals("payment required") &&
+                status.equals("active")
+              ) {
+                JOptionPane.showMessageDialog(
+                  null,
+                  "The listing cannot be 'active' since it requires payment first."
+                );
+              }
+            } else {
               rentalDAO.changePropertyStatus(address, status);
               JOptionPane.showMessageDialog(
                 null,
-                "Status Updated! Expired listings will not be changed to active until paid. Click 'Refresh Statuses' to refresh the statuses."
+                "Status Updated!Click 'Refresh Statuses' to refresh the statuses."
               );
             }
           } catch (Exception exc) {

@@ -3,7 +3,6 @@ package src.Database;
 import java.io.*;
 import java.sql.*;
 import java.text.DateFormat;
-import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.time.LocalDate;
 import java.util.*;
@@ -117,6 +116,45 @@ public class RentalDatabaseObject {
         list.add(tempProperty);
       }
       return list;
+    } finally {
+      close(query, results);
+    }
+  }
+
+  public Property getProperty(int id) throws Exception {
+    Property property = null;
+    PreparedStatement query = null;
+    ResultSet results = null;
+
+    try {
+      query = myConn.prepareStatement("SELECT * FROM properties WHERE id=?");
+      query.setInt(1, id);
+
+      results = query.executeQuery();
+      while (results.next()) {
+        property = convertRowToProperty(results);
+      }
+      return property;
+    } finally {
+      close(query, results);
+    }
+  }
+
+  public Property getProperty(String address) throws Exception {
+    Property property = null;
+    PreparedStatement query = null;
+    ResultSet results = null;
+
+    try {
+      query =
+        myConn.prepareStatement("SELECT * FROM properties WHERE address=?");
+      query.setString(1, address);
+
+      results = query.executeQuery();
+      while (results.next()) {
+        property = convertRowToProperty(results);
+      }
+      return property;
     } finally {
       close(query, results);
     }
@@ -302,7 +340,7 @@ public class RentalDatabaseObject {
     String orignalExpiry,
     int extendedDays
   )
-    throws SQLException, ParseException {
+    throws Exception {
     PreparedStatement query = null;
     ResultSet results = null;
 
@@ -328,10 +366,16 @@ public class RentalDatabaseObject {
   }
 
   public void changePropertyStatus(String address, String status)
-    throws SQLException {
+    throws Exception {
     PreparedStatement query = null;
     ResultSet results = null;
 
+    if (
+      !status.equals("active") &&
+      getProperty(address).getStatus().equals("active")
+    ) {
+      pruneNotifications(getProperty(address));
+    }
     try {
       query =
         myConn.prepareStatement(
@@ -345,17 +389,51 @@ public class RentalDatabaseObject {
     } finally {
       close(query, results);
     }
+    if (status.equals("active")) {
+      notifySubscription(getProperty(address));
+    }
     updateAllPropertyStatus();
   }
 
-  private void updateAllPropertyStatus() throws SQLException {
+  private void updateAllPropertyStatus() throws Exception {
     PreparedStatement query = null;
     ResultSet results = null;
 
     try {
       query =
         myConn.prepareStatement(
-          "UPDATE properties SET status = 'suspended' WHERE status = 'active' AND expirydate <= ?"
+          "UPDATE properties SET status = 'payment required' WHERE status = 'active' AND expirydate <= ?"
+        );
+      query.setString(1, java.time.LocalDate.now().toString());
+      System.out.println(query.toString());
+      int rowcount = query.executeUpdate();
+      System.out.println("Success - " + rowcount + " rows affected.");
+    } finally {
+      close(query, results);
+    }
+    query = null;
+    results = null;
+    try {
+      query =
+        myConn.prepareStatement(
+          "SELECT * FROM properties WHERE status = 'payment required' AND expirydate > ?"
+        );
+      query.setString(1, java.time.LocalDate.now().toString());
+      System.out.println(query.toString());
+      results = query.executeQuery();
+      while (results.next()) {
+        Property tempProperty = convertRowToProperty(results);
+        notifySubscription(tempProperty);
+      }
+    } finally {
+      close(query, results);
+    }
+    query = null;
+    results = null;
+    try {
+      query =
+        myConn.prepareStatement(
+          "UPDATE properties SET status = 'active' WHERE status = 'payment required' AND expirydate > ?"
         );
       query.setString(1, java.time.LocalDate.now().toString());
       System.out.println(query.toString());
@@ -575,6 +653,96 @@ public class RentalDatabaseObject {
     }
   }
 
+  public Subscription getSubscription(int id) throws Exception {
+    Subscription subscription = null;
+    PreparedStatement query = null;
+    ResultSet results = null;
+
+    try {
+      query = myConn.prepareStatement("SELECT * FROM subscriptions WHERE id=?");
+      query.setInt(1, id);
+
+      results = query.executeQuery();
+      while (results.next()) {
+        subscription = convertRowToSubscription(results);
+      }
+      return subscription;
+    } finally {
+      close(query, results);
+    }
+  }
+
+  public void notifySubscription(Property property) throws Exception {
+    PreparedStatement query = null;
+    ResultSet results = null;
+
+    try {
+      String tempquery = "SELECT * FROM subscriptions WHERE";
+      tempquery += " (type = 'any' OR type = '" + property.getType() + "')";
+      tempquery += " AND bedrooms <= " + property.getBedrooms();
+      tempquery += " AND bathrooms <= " + property.getBathrooms();
+      tempquery +=
+        " AND (quadrant = 'any' OR quadrant = '" +
+        property.getQuadrant() +
+        "')";
+      int furnishedint = 0;
+      if (property.isFurnished()) furnishedint = 1;
+      tempquery += " AND furnished <= " + furnishedint;
+
+      System.out.println(tempquery);
+      query = myConn.prepareStatement(tempquery);
+
+      results = query.executeQuery();
+
+      while (results.next()) {
+        Subscription tempSub = convertRowToSubscription(results);
+        enterNotification(
+          tempSub.getId(),
+          property.getId(),
+          tempSub.getRenter()
+        );
+      }
+    } finally {
+      close(query, results);
+    }
+  }
+
+  private void pruneNotifications(Property property) throws SQLException {
+    PreparedStatement query = null;
+    ResultSet results = null;
+
+    try {
+      query =
+        myConn.prepareStatement(
+          "DELETE FROM notifications WHERE lisintgid = " + property.getId()
+        );
+      System.out.println(query.toString());
+      int rowcount = query.executeUpdate();
+      System.out.println("Success - " + rowcount + " rows affected.");
+    } finally {
+      close(query, results);
+    }
+  }
+
+  private void pruneNotifications(Subscription subscription)
+    throws SQLException {
+    PreparedStatement query = null;
+    ResultSet results = null;
+
+    try {
+      query =
+        myConn.prepareStatement(
+          "DELETE FROM notifications WHERE subscriptionid = " +
+          subscription.getId()
+        );
+      System.out.println(query.toString());
+      int rowcount = query.executeUpdate();
+      System.out.println("Success - " + rowcount + " rows affected.");
+    } finally {
+      close(query, results);
+    }
+  }
+
   private Subscription convertRowToSubscription(ResultSet set)
     throws SQLException {
     int id = set.getInt("id");
@@ -603,10 +771,98 @@ public class RentalDatabaseObject {
   public void deleteSubscription(int id) throws Exception {
     PreparedStatement query = null;
     ResultSet results = null;
-
+    pruneNotifications(getSubscription(id));
     try {
       query =
         myConn.prepareStatement("DELETE FROM subscriptions WHERE id = " + id);
+      System.out.println(query.toString());
+      int rowcount = query.executeUpdate();
+      System.out.println("Success - " + rowcount + " rows affected.");
+    } finally {
+      close(query, results);
+    }
+  }
+
+  public List<Notification> getRentersNotifications(String renter)
+    throws Exception {
+    List<Notification> list = new ArrayList<>();
+
+    PreparedStatement query = null;
+    ResultSet results = null;
+
+    try {
+      query =
+        myConn.prepareStatement("SELECT * FROM notifications WHERE renter=?");
+      query.setString(1, renter);
+
+      results = query.executeQuery();
+      while (results.next()) {
+        Notification tempNotification = convertRowToNotification(results);
+        list.add(tempNotification);
+      }
+      return list;
+    } finally {
+      close(query, results);
+    }
+  }
+
+  private Notification convertRowToNotification(ResultSet set)
+    throws SQLException {
+    int subscriptionid = set.getInt("subscriptionid");
+    int listingid = set.getInt("listingid");
+    String renter = set.getString("renter");
+
+    Notification tempNotification = new Notification(
+      subscriptionid,
+      listingid,
+      renter
+    );
+
+    return tempNotification;
+  }
+
+  public void deleteNotification(
+    int subscriptionid,
+    String address,
+    String renter
+  )
+    throws Exception {
+    PreparedStatement query = null;
+    ResultSet results = null;
+
+    try {
+      query =
+        myConn.prepareStatement(
+          "DELETE FROM subscriptions WHERE subscriptionid = ? AND listingid = ? AND renter = ?"
+        );
+      query.setInt(1, subscriptionid);
+      query.setInt(2, getProperty(address).getId());
+      query.setString(3, renter);
+      System.out.println(query.toString());
+      int rowcount = query.executeUpdate();
+      System.out.println("Success - " + rowcount + " rows affected.");
+    } finally {
+      close(query, results);
+    }
+  }
+
+  public void enterNotification(
+    int subscriptionid,
+    int listingid,
+    String renter
+  )
+    throws Exception {
+    PreparedStatement query = null;
+    ResultSet results = null;
+
+    try {
+      query =
+        myConn.prepareStatement(
+          "INSERT INTO notifications (subscriptionid, listingid, renter) VALUES (?, ?, ?)"
+        );
+      query.setInt(1, subscriptionid);
+      query.setInt(2, listingid);
+      query.setString(3, renter);
       System.out.println(query.toString());
       int rowcount = query.executeUpdate();
       System.out.println("Success - " + rowcount + " rows affected.");

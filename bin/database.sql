@@ -64,7 +64,7 @@ CREATE TABLE PROPERTIES (
     bathrooms INT unsigned NOT NULL,
     furnished INT NOT NULL,
     quadrant VARCHAR(3) NOT NULL,
-    status VARCHAR(15) NOT NULL,
+    status VARCHAR(20) NOT NULL,
     expirydate DATE NOT NULL,
     PRIMARY KEY (id), 
     FOREIGN KEY (owner) REFERENCES USERS(username) ON UPDATE CASCADE
@@ -92,8 +92,10 @@ VALUES
 
 
 CREATE TABLE NOTIFICATIONS (
+    subscriptionid INT unsigned NOT NULL,
     listingid INT unsigned NOT NULL,
     renter VARCHAR(150) NOT NULL,
+    FOREIGN KEY (subscriptionid) REFERENCES SUBSCRIPTIONS(id) ON UPDATE CASCADE,
     FOREIGN KEY (listingid) REFERENCES PROPERTIES(id) ON UPDATE CASCADE,
     FOREIGN KEY (renter) REFERENCES USERS(username) ON UPDATE CASCADE
 );

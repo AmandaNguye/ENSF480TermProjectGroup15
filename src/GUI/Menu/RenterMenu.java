@@ -15,7 +15,7 @@ public class RenterMenu extends Menu {
     greeting.setText("Welcome " + user);
     this.add(greeting);
     panel1 = new SearchPropertyForm(user);
-    panel2 = new ViewNotificationWindow();
+    panel2 = new ViewNotificationWindow(user);
     panel3 = new ViewSubscriptionsWindow();
     panel4 = new ViewEmailWindow(user);
 
