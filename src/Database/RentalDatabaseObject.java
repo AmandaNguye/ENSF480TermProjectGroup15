@@ -399,6 +399,43 @@ public class RentalDatabaseObject {
     return tempProperty;
   }
 
+  public void addSubscription(
+    String renter,
+    String type,
+    int bedrooms,
+    int bathrooms,
+    String quadrant,
+    Boolean furnished
+  )
+    throws Exception {
+    PreparedStatement query = null;
+    ResultSet results = null;
+
+    try {
+      query =
+        myConn.prepareStatement(
+          "INSERT INTO subscriptions (renter, type, bedrooms, bathrooms, furnished, quadrant) VALUES (?, ?, ?, ?, ?, ?)"
+        );
+      query.setString(1, renter);
+      query.setString(2, type);
+      query.setInt(3, bedrooms);
+      query.setInt(4, bathrooms);
+
+      int furnishedint = 0;
+      if (furnished) furnishedint = 1;
+
+      query.setInt(5, furnishedint);
+      query.setString(6, quadrant);
+
+      System.out.println(query.toString());
+      int rowcount = query.executeUpdate();
+      System.out.println("Success - " + rowcount + " rows affected.");
+      updateAllPropertyStatus();
+    } finally {
+      close(query, results);
+    }
+  }
+
   public void enterProperty(Property newProperty) throws Exception {
     PreparedStatement query = null;
     ResultSet results = null;
@@ -516,5 +553,65 @@ public class RentalDatabaseObject {
     //System.out.println(dao.getAllProperties());
     //dao.updatePropertyStatus();
     //dao.changePropertyStatus("111 North ST", "cancelled");
+  }
+
+  public List<Subscription> getAllSubscriptions() throws SQLException {
+    List<Subscription> list = new ArrayList<>();
+
+    Statement query = null;
+    ResultSet results = null;
+
+    try {
+      query = myConn.createStatement();
+      results = query.executeQuery("SELECT * FROM subscriptions");
+
+      while (results.next()) {
+        Subscription tempSub = convertRowToSubscription(results);
+        list.add(tempSub);
+      }
+      return list;
+    } finally {
+      close(query, results);
+    }
+  }
+
+  private Subscription convertRowToSubscription(ResultSet set)
+    throws SQLException {
+    int id = set.getInt("id");
+    String renter = set.getString("renter");
+    String type = set.getString("type");
+    int bedrooms = set.getInt("bedrooms");
+    int bathrooms = set.getInt("bathrooms");
+    int furnished = set.getInt("furnished");
+    boolean furnishedBool = false;
+    if (furnished == 1) furnishedBool = true;
+    String quadrant = set.getString("quadrant");
+
+    Subscription tempSub = new Subscription(
+      id,
+      renter,
+      type,
+      bedrooms,
+      bathrooms,
+      furnishedBool,
+      quadrant
+    );
+
+    return tempSub;
+  }
+
+  public void deleteSubscription(int id) throws Exception {
+    PreparedStatement query = null;
+    ResultSet results = null;
+
+    try {
+      query =
+        myConn.prepareStatement("DELETE FROM subscriptions WHERE id = " + id);
+      System.out.println(query.toString());
+      int rowcount = query.executeUpdate();
+      System.out.println("Success - " + rowcount + " rows affected.");
+    } finally {
+      close(query, results);
+    }
   }
 }
