@@ -7,6 +7,9 @@ import java.text.SimpleDateFormat;
 import java.time.LocalDate;
 import java.util.*;
 import java.util.Date;
+
+import com.mysql.cj.xdevapi.SelectStatement;
+
 import src.Entities.*;
 
 public class RentalDatabaseObject {
@@ -77,7 +80,7 @@ public class RentalDatabaseObject {
   public ResultSet getFeeData() {
 		try {
 			String query = "select @amount, @period";
-			PreparedStatement myStmt = dbConnect.prepareStatement(query);
+			PreparedStatement myStmt = myConn.prepareStatement(query);
 			return myStmt.executeQuery();
 		} catch (SQLException e) {
 			e.printStackTrace();
@@ -514,7 +517,7 @@ public class RentalDatabaseObject {
     return tempProperty;
   }
 
-  public void addSubscription(
+  public int addSubscription(
     String renter,
     String type,
     int bedrooms,
@@ -524,28 +527,48 @@ public class RentalDatabaseObject {
   )
     throws Exception {
     PreparedStatement query = null;
+    PreparedStatement checkQuery = null;
     ResultSet results = null;
 
     try {
+      checkQuery = myConn.prepareStatement(
+        "SELECT * FROM subscriptions WHERE renter = ? AND type = ? AND bedrooms = ? AND bathrooms = ? AND furnished = ? AND quadrant = ?" 
+        );
       query =
         myConn.prepareStatement(
           "INSERT INTO subscriptions (renter, type, bedrooms, bathrooms, furnished, quadrant) VALUES (?, ?, ?, ?, ?, ?)"
         );
       query.setString(1, renter);
+      checkQuery.setString(1, renter);
       query.setString(2, type);
+      checkQuery.setString(2, type);
       query.setInt(3, bedrooms);
+      checkQuery.setInt(3, bedrooms);
       query.setInt(4, bathrooms);
+      checkQuery.setInt(4, bathrooms);
 
       int furnishedint = 0;
       if (furnished) furnishedint = 1;
 
       query.setInt(5, furnishedint);
+      checkQuery.setInt(5, furnishedint);
       query.setString(6, quadrant);
-
-      System.out.println(query.toString());
-      int rowcount = query.executeUpdate();
-      System.out.println("Success - " + rowcount + " rows affected.");
-      updateAllPropertyStatus();
+      checkQuery.setString(6, quadrant);
+      
+      System.out.println(checkQuery.toString());
+      ResultSet r = checkQuery.executeQuery();
+      if(r.next() == false)
+      {
+        int rowcount = query.executeUpdate();
+        System.out.println("Success - " + rowcount + " rows affected.");
+        updateAllPropertyStatus();
+        return 1;
+      }
+      else
+      {
+        return 0;
+      }
+      
     } finally {
       close(query, results);
     }

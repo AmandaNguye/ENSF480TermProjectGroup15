@@ -173,8 +173,9 @@ public class SearchPropertyForm extends GUI {
           );
           String quadrant = quadrantBox.getSelectedItem().toString();
           Boolean furnished = furnishedBox.isSelected();
+          
           try {
-            rentalDAO.addSubscription(
+            int check = rentalDAO.addSubscription(
               user,
               type,
               bedrooms,
@@ -182,10 +183,19 @@ public class SearchPropertyForm extends GUI {
               quadrant,
               furnished
             );
-            JOptionPane.showMessageDialog(
+            if(check == 1)
+            {
+              JOptionPane.showMessageDialog(
               null,
-              "Subscription added. You will be notified when new listings that match your criteria become active."
-            );
+              "Subscription added. You will be notified when new listings that match your criteria become active.");
+            }
+            if(check == 0)
+            {
+              JOptionPane.showMessageDialog(
+              null,
+              "You are already subscribed to listings matching that criteria");
+            }
+            
           } catch (Exception exc) {
             JOptionPane.showMessageDialog(
               SearchPropertyForm.this,
