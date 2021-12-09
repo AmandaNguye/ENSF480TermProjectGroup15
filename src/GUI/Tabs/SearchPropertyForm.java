@@ -6,6 +6,9 @@ import java.util.List;
 import javax.swing.*;
 import src.Entities.*;
 
+/**
+ * SearchPropertyForm builds and displays the search form tab used by a renters to search for specific properties.
+ */
 public class SearchPropertyForm extends GUI {
 
   private JLabel typeLabel;
@@ -27,6 +30,11 @@ public class SearchPropertyForm extends GUI {
 
   //private JLabel status;
 
+	/**
+	 * Constructor
+	 * 
+	 * @param user			username
+	 */
   public SearchPropertyForm(String user) {
     super();
     typeLabel = new JLabel("Type:");

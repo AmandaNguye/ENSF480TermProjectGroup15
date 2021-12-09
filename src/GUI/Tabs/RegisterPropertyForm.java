@@ -5,6 +5,9 @@ import java.util.List;
 import javax.swing.*;
 import src.Entities.*;
 
+/**
+ * RegisterPropertyForm builds and displays the property registration tab used by a landlord to register a property.
+ */
 public class RegisterPropertyForm extends GUI {
 
   private JLabel addressLabel;
@@ -23,6 +26,11 @@ public class RegisterPropertyForm extends GUI {
 
   //private JLabel status;
 
+	/**
+	 * Constructor
+	 * 
+	 * @param user			username
+	 */
   public RegisterPropertyForm(String user) {
     super();
     addressLabel = new JLabel("Address:");

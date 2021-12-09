@@ -3,6 +3,9 @@ package src.GUI.Menu;
 import java.awt.Font;
 import javax.swing.*;
 
+/**
+ * Menu is a parent class that contains variables common to all different menus.
+ */
 public class Menu extends JFrame {
 
   protected JLabel greeting;
@@ -13,6 +16,9 @@ public class Menu extends JFrame {
   protected JPanel panel5;
   protected JTabbedPane tabs;
 
+	/**
+	 * Constructor
+	 */
   Menu(String title) {
     setTitle(title);
     setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);

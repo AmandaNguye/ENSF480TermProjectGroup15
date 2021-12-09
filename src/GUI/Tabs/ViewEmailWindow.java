@@ -6,6 +6,9 @@ import java.util.List;
 import javax.swing.*;
 import src.Entities.*;
 
+/**
+ * ViewEmailWindow builds and displays the email viewer tab used view and respond to emails.
+ */
 public class ViewEmailWindow extends GUI {
 
   private JButton viewEmailsButton;
@@ -14,6 +17,11 @@ public class ViewEmailWindow extends GUI {
   private JButton deleteEmailButton;
   private JButton respondButton;
 
+	/**
+	 * Constructor
+	 * 
+	 * @param user			username
+	 */
   public ViewEmailWindow(String user) {
     super();
     viewEmailsButton = new JButton("Show Emails");

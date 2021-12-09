@@ -6,6 +6,9 @@ import java.util.List;
 import javax.swing.*;
 import src.Entities.*;
 
+/**
+ * MakeReportForm builds and displays the report form tab used by a manager
+ */
 public class MakeReportForm extends GUI {
 
   private JButton makeReportButton;
@@ -19,6 +22,9 @@ public class MakeReportForm extends GUI {
   private JLabel periodRentalsTableLabel;
   private JTable periodRentalsTable;
 
+	/**
+	 * Constructor
+	 */
   public MakeReportForm() {
     super();
     makeReportButton = new JButton("Show Report");

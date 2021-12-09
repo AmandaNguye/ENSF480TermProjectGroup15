@@ -9,6 +9,9 @@ import java.util.*;
 import java.util.Date;
 import src.Entities.*;
 
+/**
+ * RentalDatabaseObject contains functionality for connecting and exchanging data with the database
+ */
 public class RentalDatabaseObject {
 
 	private Connection myConn;

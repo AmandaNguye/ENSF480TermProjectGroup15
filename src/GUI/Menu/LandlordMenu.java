@@ -5,10 +5,15 @@ import src.GUI.Tabs.PayFeesForm;
 import src.GUI.Tabs.RegisterPropertyForm;
 import src.GUI.Tabs.ViewEmailWindow;
 
+/**
+ * LandlordMenu displays the landlord window 
+ */
 public class LandlordMenu extends Menu {
 
   /**
-   * Launch the application.
+   * Constructor
+   * 
+   * @param user 	landlord's username
    */
   public LandlordMenu(String user) {
     /**

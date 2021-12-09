@@ -6,12 +6,18 @@ import java.util.List;
 import javax.swing.*;
 import src.Entities.*;
 
+/**
+ * ViewUsersWindow builds and displays the user viewer tab used to view all users in the database.
+ */
 public class ViewUsersWindow extends GUI {
 
   private JButton viewUsersButton;
   private JScrollPane scrollPane;
   private JTable userTable;
 
+	/**
+	 * Constructor
+	 */
   public ViewUsersWindow() {
     super();
     viewUsersButton = new JButton("Show Users");

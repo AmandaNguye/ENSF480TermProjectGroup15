@@ -6,6 +6,9 @@ import java.util.List;
 import javax.swing.*;
 import src.Entities.*;
 
+/**
+ * ManageStateListingForm builds and displays the property state tab used by a landlord to change the state of properties.
+ */
 public class ManageStateListingForm extends GUI {
 
   private JButton viewPropertiesButton;
@@ -13,6 +16,12 @@ public class ManageStateListingForm extends GUI {
   private JScrollPane scrollPane;
   private JTable propertyTable;
 
+	/**
+	 * Constructor
+	 * 
+	 * @param user			username
+	 * @param accountType	type of user
+	 */
   public ManageStateListingForm(String user, String accountType) {
     super();
     viewPropertiesButton = new JButton("Show Properties");

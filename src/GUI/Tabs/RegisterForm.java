@@ -6,6 +6,9 @@ import javax.swing.*;
 import src.Entities.User;
 import src.GUI.Menu.*;
 
+/**
+ * RegisterForm builds and displays the registration tab used by a guest to register for an account.
+ */
 public class RegisterForm extends GUI {
 
   private Menu menu;
@@ -21,6 +24,11 @@ public class RegisterForm extends GUI {
   private JButton registerButton;
   private JLabel status;
 
+	/**
+	 * Constructor
+	 * 
+	 * @param caller	menu object which calls the constructor
+	 */
   public RegisterForm(Menu caller) {
     // create the DAO
     super();
