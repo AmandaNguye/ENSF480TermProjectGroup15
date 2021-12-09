@@ -5,6 +5,7 @@ import javax.swing.table.AbstractTableModel;
 
 /**
  * PropertyTableModel is an entity class used to store a list of property data
+ * Also acts as a helper class to display the data in a tabular format.
  */
 public class PropertyTableModel extends AbstractTableModel {
 
