@@ -30,11 +30,11 @@ public class SearchPropertyForm extends GUI {
 
   //private JLabel status;
 
-	/**
-	 * Constructor
-	 * 
-	 * @param user			username
-	 */
+  /**
+   * Constructor
+   *
+   * @param user			username
+   */
   public SearchPropertyForm(String user) {
     super();
     typeLabel = new JLabel("Type:");
@@ -182,7 +182,7 @@ public class SearchPropertyForm extends GUI {
           String quadrant = quadrantBox.getSelectedItem().toString();
           Boolean furnished = furnishedBox.isSelected();
           try {
-            rentalDAO.addSubscription(
+            int subscriptionAlreadyExists = rentalDAO.addSubscription(
               user,
               type,
               bedrooms,
@@ -190,10 +190,17 @@ public class SearchPropertyForm extends GUI {
               quadrant,
               furnished
             );
-            JOptionPane.showMessageDialog(
-              null,
-              "Subscription added. You will be notified when new listings that match your criteria become active."
-            );
+            if (subscriptionAlreadyExists == 1) {
+              JOptionPane.showMessageDialog(
+                null,
+                "Subscription added. You will be notified when new listings that match your criteria become active."
+              );
+            } else {
+              JOptionPane.showMessageDialog(
+                null,
+                "You are already subscribed to listings matching that criteria."
+              );
+            }
           } catch (Exception exc) {
             JOptionPane.showMessageDialog(
               SearchPropertyForm.this,
