@@ -4,6 +4,9 @@ import java.util.List;
 import javax.swing.table.AbstractTableModel;
 import src.Database.RentalDatabaseObject;
 
+/**
+ * NotificationTableModel is an entity class used to store a list of notification data
+ */
 public class NotificationTableModel extends AbstractTableModel {
 
   private static final int SUBSCRIPTIONID_COL = 0;
@@ -26,6 +29,11 @@ public class NotificationTableModel extends AbstractTableModel {
   };
   private List<Notification> notifications;
 
+	/**
+	 * Constructor.
+	 *
+	 * @param thenotifications    list of notifications
+	 */
   public NotificationTableModel(List<Notification> thenotifications)
     throws Exception {
     notifications = thenotifications;

@@ -3,6 +3,9 @@ package src.Entities;
 import java.util.List;
 import javax.swing.table.AbstractTableModel;
 
+/**
+ * RentedPropertiesTableModel is an entity class used to store a list of rented property data
+ */
 public class RentedPropertiesTableModel extends AbstractTableModel {
 
   private static final int OWNER_COL = 0;
@@ -12,6 +15,11 @@ public class RentedPropertiesTableModel extends AbstractTableModel {
   private String[] columnNames = { "Landlord", "House ID", "Address" };
   private List<Property> properties;
 
+	/**
+	 * Constructor.
+	 *
+	 * @param theproperties    list of rented properties
+	 */
   public RentedPropertiesTableModel(List<Property> theproperties) {
     properties = theproperties;
   }

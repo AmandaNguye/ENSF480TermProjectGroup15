@@ -1,11 +1,21 @@
 package src.Entities;
 
+/**
+ * Notification is an entity class used to store notification data received from the database
+ */
 public class Notification {
 
   int subscriptionID;
   int listingID;
   String renter;
 
+	/**
+	 * Constructor.
+	 *
+	 * @param subscriptionID    id of the subscription
+	 * @param listingID    		id of the property
+	 * @param renter     		username of the renter
+	 */
   public Notification(int subscriptionID, int listingID, String renter) {
     this.subscriptionID = subscriptionID;
     this.listingID = listingID;

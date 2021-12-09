@@ -3,6 +3,9 @@ package src.Entities;
 import java.util.List;
 import javax.swing.table.AbstractTableModel;
 
+/**
+ * EmailTableModel is an entity class used to store a list of email data
+ */
 public class EmailTableModel extends AbstractTableModel {
 
   private static final int SENDER_COL = 0;
@@ -10,6 +13,11 @@ public class EmailTableModel extends AbstractTableModel {
   private String[] columnNames = { "Sender", "Email" };
   private List<Email> emails;
 
+	/**
+	 * Constructor.
+	 *
+	 * @param theemails      list of emails 
+	 */
   public EmailTableModel(List<Email> theemails) {
     emails = theemails;
   }

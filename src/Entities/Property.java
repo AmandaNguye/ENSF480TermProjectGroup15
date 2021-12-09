@@ -1,5 +1,8 @@
 package src.Entities;
 
+/**
+ * Property is an entity class used to store property data received from the database
+ */
 public class Property {
 
   private int id;
@@ -13,6 +16,20 @@ public class Property {
   private String status;
   private String expirydate;
 
+	/**
+	 * Constructor.
+	 *
+	 * @param id    		id of the property
+	 * @param address    	property address
+	 * @param owner     	username of the landlord
+	 * @param type			type of property
+	 * @param bedrooms		number of bedrooms
+	 * @param bathrooms		number of bathrooms
+	 * @param quadrant		which quadrant the property is located in
+	 * @param furnished		if the property should be furnished
+	 * @param status     	current status of the listing
+	 * @param expirydate    listing's expiration date
+	 */
   public Property(
     int id,
     String address,
