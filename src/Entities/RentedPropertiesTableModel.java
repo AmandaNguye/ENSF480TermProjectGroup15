@@ -5,6 +5,7 @@ import javax.swing.table.AbstractTableModel;
 
 /**
  * RentedPropertiesTableModel is an entity class used to store a list of rented property data
+ * Also acts as a helper class to display the data in a tabular format.
  */
 public class RentedPropertiesTableModel extends AbstractTableModel {
 

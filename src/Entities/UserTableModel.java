@@ -5,6 +5,7 @@ import javax.swing.table.AbstractTableModel;
 
 /**
  * UserTableModel is an entity class used to store a list of user data
+ * Also acts as a helper class to display the data in a tabular format.
  */
 public class UserTableModel extends AbstractTableModel {
 

@@ -5,6 +5,7 @@ import javax.swing.table.AbstractTableModel;
 
 /**
  * StatePropertyTableModel is an entity class used to store a list of property status data
+ * Also acts as a helper class to display the data in a tabular format.
  */
 public class StatePropertyTableModel extends AbstractTableModel {
 

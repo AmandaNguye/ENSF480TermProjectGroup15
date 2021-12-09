@@ -853,7 +853,12 @@ public class RentalDatabaseObject {
 		}
 	}
 
-	
+	/**
+	 * deletes all notifications with a specific property id from the database
+	 *
+	 * @throws 	SQLException For handling exceptions regarding MySQL
+	 * @param 	property 	property data
+	 */
 	private void pruneNotifications(Property property) throws SQLException {
 		PreparedStatement query = null;
 		ResultSet results = null;
@@ -868,6 +873,12 @@ public class RentalDatabaseObject {
 		}
 	}
 
+	/**
+	 * deletes all notifications with a specific subscription id from the database
+	 *
+	 * @throws 	SQLException For handling exceptions regarding MySQL
+	 * @param 	subscription 	subscription data
+	 */
 	private void pruneNotifications(Subscription subscription) throws SQLException {
 		PreparedStatement query = null;
 		ResultSet results = null;
@@ -886,7 +897,7 @@ public class RentalDatabaseObject {
 	 * converts subscription data received from the database into a Subscription object
 	 *
 	 * @throws 	SQLException For handling exceptions regarding MySQL
-	 * @param 	set			raw subscription data
+	 * @param 	set		raw subscription data
 	 * @return 	subscription data stored in Subscription object
 	 */
 	private Subscription convertRowToSubscription(ResultSet set) throws SQLException {

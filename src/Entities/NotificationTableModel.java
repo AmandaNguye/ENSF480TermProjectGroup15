@@ -6,6 +6,7 @@ import src.Database.RentalDatabaseObject;
 
 /**
  * NotificationTableModel is an entity class used to store a list of notification data
+ * Also acts as a helper class to display the data in a tabular format.
  */
 public class NotificationTableModel extends AbstractTableModel {
 

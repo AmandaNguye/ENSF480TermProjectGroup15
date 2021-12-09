@@ -5,6 +5,7 @@ import javax.swing.table.AbstractTableModel;
 
 /**
  * SearchPropertyTableModel is an entity class used to store a list of property search query data
+ * Also acts as a helper class to display the data in a tabular format.
  */
 public class SearchPropertyTableModel extends AbstractTableModel {
 
