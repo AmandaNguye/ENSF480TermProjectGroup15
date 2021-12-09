@@ -3,6 +3,10 @@ package src.Entities;
 import java.util.List;
 import javax.swing.table.AbstractTableModel;
 
+/**
+ * PropertyTableModel is an entity class used to store a list of property data
+ * Also acts as a helper class to display the data in a tabular format.
+ */
 public class PropertyTableModel extends AbstractTableModel {
 
   private static final int ID_COL = 0;
@@ -30,6 +34,11 @@ public class PropertyTableModel extends AbstractTableModel {
   };
   private List<Property> properties;
 
+	/**
+	 * Constructor.
+	 *
+	 * @param theproperties    list of properties
+	 */
   public PropertyTableModel(List<Property> theproperties) {
     properties = theproperties;
   }

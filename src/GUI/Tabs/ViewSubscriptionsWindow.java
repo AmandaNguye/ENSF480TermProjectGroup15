@@ -6,6 +6,9 @@ import java.util.List;
 import javax.swing.*;
 import src.Entities.*;
 
+/**
+ * ViewSubscriptionsWindow builds and displays the subscription viewer tab used to view subscriptions.
+ */
 public class ViewSubscriptionsWindow extends GUI {
 
   private JButton viewSubscriptionsButton;
@@ -13,6 +16,9 @@ public class ViewSubscriptionsWindow extends GUI {
   private JScrollPane scrollPane;
   private JTable subscriptionTable;
 
+	/**
+	 * Constructor
+	 */
   public ViewSubscriptionsWindow() {
     super();
     viewSubscriptionsButton = new JButton("Show Subscriptions");

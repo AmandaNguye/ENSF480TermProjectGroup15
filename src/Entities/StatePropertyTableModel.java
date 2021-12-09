@@ -3,6 +3,10 @@ package src.Entities;
 import java.util.List;
 import javax.swing.table.AbstractTableModel;
 
+/**
+ * StatePropertyTableModel is an entity class used to store a list of property status data
+ * Also acts as a helper class to display the data in a tabular format.
+ */
 public class StatePropertyTableModel extends AbstractTableModel {
 
   private static final int ADDRESS_COL = 0;
@@ -10,6 +14,11 @@ public class StatePropertyTableModel extends AbstractTableModel {
   private String[] columnNames = { "Address", "Status" };
   private List<Property> properties;
 
+	/**
+	 * Constructor.
+	 *
+	 * @param theproperties    list of properties
+	 */
   public StatePropertyTableModel(List<Property> theproperties) {
     properties = theproperties;
   }

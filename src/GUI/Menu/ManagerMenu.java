@@ -5,10 +5,16 @@ import src.GUI.Tabs.ManageFeesForm;
 import src.GUI.Tabs.ManageStateListingForm;
 import src.GUI.Tabs.ViewUsersWindow;
 
+/**
+ * ManagerMenu displays the manager window 
+ */
 public class ManagerMenu extends Menu {
 
   /**
+   * Constructor
    * Launch the application.
+   * 
+   * @param user 	manager's username
    */
   public ManagerMenu(String user) {
     /**

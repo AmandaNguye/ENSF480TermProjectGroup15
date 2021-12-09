@@ -10,6 +10,9 @@ import java.util.List;
 import javax.swing.*;
 import src.Entities.*;
 
+/**
+ * PayFeesForm builds and displays the pay fee tab used by a landlord to pay to extend the expiration date of owned properties.
+ */
 public class PayFeesForm extends GUI {
 
   private JButton viewPropertiesButton;
@@ -21,6 +24,12 @@ public class PayFeesForm extends GUI {
   private int feePrice;
   private int feePeriod;
 
+	/**
+	 * Constructor
+	 * 
+	 * @param user			username
+	 * @param accountType	type of user
+	 */
   public PayFeesForm(String user, String accountType) {
     super();
     feePriceLabel = new JLabel("");

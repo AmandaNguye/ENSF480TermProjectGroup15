@@ -1,5 +1,8 @@
 package src.Entities;
 
+/**
+ * Subscription is an entity class used to store a list of subscription data
+ */
 public class Subscription {
 
   private int id;
@@ -10,6 +13,17 @@ public class Subscription {
   private boolean furnished;
   private String quadrant;
 
+	/**
+	 * Constructor.
+	 *
+	 * @param id    		id of the property
+	 * @param renter     	renter's username
+	 * @param type			type of property
+	 * @param bedrooms		number of bedrooms
+	 * @param bathrooms		number of bathrooms
+	 * @param quadrant		which quadrant the property is located in
+	 * @param furnished		if the property should be furnished
+	 */
   public Subscription(
     int id,
     String renter,

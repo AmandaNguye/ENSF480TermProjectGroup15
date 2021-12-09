@@ -5,8 +5,16 @@ import src.GUI.Tabs.ViewEmailWindow;
 import src.GUI.Tabs.ViewNotificationWindow;
 import src.GUI.Tabs.ViewSubscriptionsWindow;
 
+/**
+ * RenterMenu displays the renter window 
+ */
 public class RenterMenu extends Menu {
 
+  /**
+   * Constructor
+   * 
+   * @param user 	renter's username
+   */
   public RenterMenu(String user) {
     /**
      * Create the frame.

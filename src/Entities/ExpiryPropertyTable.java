@@ -3,6 +3,10 @@ package src.Entities;
 import java.util.List;
 import javax.swing.table.AbstractTableModel;
 
+/**
+ * ExpiryPropertyTable is an entity class used to store a list of property expiration data
+ * Also acts as a helper class to display the data in a tabular format.
+ */
 public class ExpiryPropertyTable extends AbstractTableModel {
 
   private static final int ADDRESS_COL = 0;
@@ -10,6 +14,11 @@ public class ExpiryPropertyTable extends AbstractTableModel {
   private String[] columnNames = { "Address", "Payment Expiry Date" };
   private List<Property> properties;
 
+	/**
+	 * Constructor.
+	 *
+	 * @param theproperties      list of properties 
+	 */
   public ExpiryPropertyTable(List<Property> theproperties) {
     properties = theproperties;
   }

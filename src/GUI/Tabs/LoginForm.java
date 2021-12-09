@@ -6,6 +6,9 @@ import javax.swing.*;
 import src.Entities.User;
 import src.GUI.Menu.*;
 
+/**
+ * LoginForm builds and displays the login form tab used by a guest user
+ */
 public class LoginForm extends GUI {
 
   private Menu menu;
@@ -16,6 +19,11 @@ public class LoginForm extends GUI {
   private JButton loginButton;
   private JLabel status;
 
+	/**
+	 * Constructor
+	 * 
+	 * @param caller	menu object which calls the constructor
+	 */
   public LoginForm(Menu caller) {
     // create the DAO
     super();

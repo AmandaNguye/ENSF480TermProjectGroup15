@@ -3,6 +3,10 @@ package src.Entities;
 import java.util.List;
 import javax.swing.table.AbstractTableModel;
 
+/**
+ * UserTableModel is an entity class used to store a list of user data
+ * Also acts as a helper class to display the data in a tabular format.
+ */
 public class UserTableModel extends AbstractTableModel {
 
   private static final int USERNAME_COL = 0;
@@ -12,6 +16,11 @@ public class UserTableModel extends AbstractTableModel {
   private String[] columnNames = { "Username", "Password", "AccountType" };
   private List<User> users;
 
+	/**
+	 * Constructor.
+	 *
+	 * @param theusers    list of users
+	 */
   public UserTableModel(List<User> theusers) {
     users = theusers;
   }

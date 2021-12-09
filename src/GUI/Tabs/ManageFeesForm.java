@@ -3,6 +3,9 @@ package src.GUI.Tabs;
 import java.awt.event.*;
 import javax.swing.*;
 
+/**
+ * ManageFeesForm builds and displays the fee form tab used by a manager to alter the fee period and amount.
+ */
 public class ManageFeesForm extends GUI {
 
   private JButton viewFeesButton;
@@ -18,6 +21,9 @@ public class ManageFeesForm extends GUI {
   private JTextField periodText;
   private JButton updateInfoButton;
 
+	/**
+	 * Constructor
+	 */
   public ManageFeesForm() {
     super();
     feePriceLabel = new JLabel("");

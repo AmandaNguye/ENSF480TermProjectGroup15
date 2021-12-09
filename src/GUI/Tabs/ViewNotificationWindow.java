@@ -6,6 +6,9 @@ import java.util.List;
 import javax.swing.*;
 import src.Entities.*;
 
+/**
+ * ViewNotificationWindow builds and displays the notifications viewer tab used to view notifications from properties.
+ */
 public class ViewNotificationWindow extends GUI {
 
   private JButton viewNotificationsButton;
@@ -13,6 +16,11 @@ public class ViewNotificationWindow extends GUI {
   private JScrollPane scrollPane;
   private JTable notificationTable;
 
+	/**
+	 * Constructor
+	 * 
+	 * @param user			username
+	 */
   public ViewNotificationWindow(String user) {
     super();
     viewNotificationsButton = new JButton("Show Notifications");

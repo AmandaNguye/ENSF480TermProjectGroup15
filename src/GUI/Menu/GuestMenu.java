@@ -4,10 +4,13 @@ import src.GUI.Tabs.GuestSearchPropertyForm;
 import src.GUI.Tabs.LoginForm;
 import src.GUI.Tabs.RegisterForm;
 
+/**
+ * GuestMenu displays the guest window 
+ */
 public class GuestMenu extends Menu {
 
   /**
-   * Launch the application.
+   * Constructor
    */
   public GuestMenu() {
     /**

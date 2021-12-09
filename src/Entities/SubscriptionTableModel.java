@@ -3,6 +3,10 @@ package src.Entities;
 import java.util.List;
 import javax.swing.table.AbstractTableModel;
 
+/**
+ * SubscriptionTableModel is an entity class used to store a list of user subscription data.
+ * Also acts as a helper class to display the data in a tabular format.
+ */
 public class SubscriptionTableModel extends AbstractTableModel {
 
   private static final int ID_COL = 0;
@@ -22,6 +26,11 @@ public class SubscriptionTableModel extends AbstractTableModel {
   };
   private List<Subscription> subscriptions;
 
+	/**
+	 * Constructor.
+	 *
+	 * @param thesubscriptions    list of subscriptions
+	 */
   public SubscriptionTableModel(List<Subscription> thesubscriptions) {
     subscriptions = thesubscriptions;
   }
