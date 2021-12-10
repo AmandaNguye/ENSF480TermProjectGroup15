@@ -15,7 +15,7 @@
 
 
 (1)Run the program using the following line in the command prompt:
-"java -jar Rental.jar"
+"java -jar ENSF480TermProjectGroup15.jar"
 */
 
 package src;
