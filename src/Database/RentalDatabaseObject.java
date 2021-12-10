@@ -847,6 +847,7 @@ public class RentalDatabaseObject {
     close(null, myStmt, myRs);
   }
 
+  /*
   public static void main(String[] args) throws Exception {
     RentalDatabaseObject dao = new RentalDatabaseObject();
     System.out.println(dao.getAllUsers());
@@ -855,7 +856,7 @@ public class RentalDatabaseObject {
     // System.out.println(dao.getAllProperties());
     // dao.updatePropertyStatus();
     // dao.changePropertyStatus("111 North ST", "cancelled");
-  }
+  }*/
 
   /**
    * gets all subscriptions stored in the database
