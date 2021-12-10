@@ -6,6 +6,9 @@ import java.util.List;
 import javax.swing.*;
 import src.Entities.*;
 
+/**
+ * AccessPropertiesForm builds and displays the property deletion tab used by a manager to delete properties.
+ */
 public class AccessPropertiesForm extends GUI {
 
   private JButton viewPropertiesButton;
@@ -13,6 +16,9 @@ public class AccessPropertiesForm extends GUI {
   private JScrollPane scrollPane;
   private JTable propertyTable;
 
+  /**
+   * Constructor
+   */
   public AccessPropertiesForm() {
     super();
     viewPropertiesButton = new JButton("Show Properties");
