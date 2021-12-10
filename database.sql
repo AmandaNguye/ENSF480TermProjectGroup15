@@ -106,7 +106,7 @@ CREATE TABLE PROPERTYLOGS (
     listingid INT unsigned NOT NULL,
     statuschange VARCHAR(20) NOT NULL,
     logdate DATE NOT NULL,
-    FOREIGN KEY (listingid) REFERENCES PROPERTIES(id)
+    FOREIGN KEY (listingid) REFERENCES PROPERTIES(id) ON DELETE CASCADE
 );
 
 
