@@ -48,7 +48,7 @@ public class Main extends JFrame {
       new Runnable() {
         public void run() {
           try {
-            Boolean testing = true;
+            Boolean testing = false;
             if (!testing) {
               Menu frame = new GuestMenu();
               frame.setVisible(true);
