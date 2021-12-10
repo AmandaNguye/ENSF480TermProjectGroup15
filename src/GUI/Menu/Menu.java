@@ -2,8 +2,6 @@ package src.GUI.Menu;
 
 import java.awt.Font;
 import java.awt.event.*;
-import java.util.List;
-import javax.swing.*;
 import javax.swing.*;
 
 /**
