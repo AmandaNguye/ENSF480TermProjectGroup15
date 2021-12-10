@@ -1,6 +1,6 @@
 # ENSF 480 Term Project: Rental Management System - Rental.jar
 
-## Group 15: Amanda Nguyen
+## Group 15: Amanda Nguyen, Liam Parmar, Vrund Patel, Kaumil Patel
 
 ### INSTRUCTIONS
 
