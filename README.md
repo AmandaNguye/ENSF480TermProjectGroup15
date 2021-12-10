@@ -9,7 +9,8 @@
     - username: ensf480
     - password: ensf480password
     - host and port: 127.0.0.1:3306
-      This must match the information in ./src/Database/account.properties, otherwise MySQL errors will occur.
+
+#### This must match the information in ./src/Database/account.properties, otherwise MySQL errors will occur.
 
 2. Ensure you have a properly initialized database.
 
