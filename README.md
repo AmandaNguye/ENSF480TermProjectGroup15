@@ -4,22 +4,15 @@
 
 ### INSTRUCTIONS
 
-1. Ensure you have a MySQL connection with the following criteria:
-
-    - username: ensf480
-    - password: ensf480password
-    - host: 127.0.0.1
-    - port: 3306
-
-#### This must match the information in ./src/Database/account.properties, otherwise MySQL errors will occur.
-
-2. Ensure you have a properly initialized database.
+1. Ensure you have a properly initialized database.
 
     - You can run the one provided titled "database.sql".
 
-3. Run the program using the following line in the command prompt or execute the jar file:
+2. Run the program using the following line in the command prompt or execute the jar file:
 
     - "java -jar ENSF480TermProjectGroup15.jar"
+
+3. The program will ask for your MySQL database connectivity information. You may only continue to the program if the information is correct or if previous account information is valid.
 
 4. Use the program as instructed.
 

@@ -25,7 +25,7 @@ public class RentalDatabaseObject {
   public RentalDatabaseObject() throws Exception {
     // get db properties
     Properties acct = new Properties();
-    acct.load(new FileInputStream("src/Database/account.properties"));
+    acct.load(new FileInputStream("account.properties"));
 
     String user = acct.getProperty("user");
     String password = acct.getProperty("password");
@@ -41,34 +41,34 @@ public class RentalDatabaseObject {
     }
   }
 
-	/**
-	 * gets all users in the database
-	 *
-	 * @throws SQLException For handling exceptions regarding MySQL
-	 * @return ArrayList of User objects
-	 */
-	public List<User> getAllUsers() throws Exception {
-		List<User> list = new ArrayList<>();
-		Statement query = null;
-		ResultSet results = null;
+  /**
+   * gets all users in the database
+   *
+   * @throws SQLException For handling exceptions regarding MySQL
+   * @return ArrayList of User objects
+   */
+  public List<User> getAllUsers() throws Exception {
+    List<User> list = new ArrayList<>();
+    Statement query = null;
+    ResultSet results = null;
 
-		// query formulated 
-		try {
-			query = myConn.createStatement();
-			// query initiated
-			results = query.executeQuery("SELECT * FROM users");
+    // query formulated
+    try {
+      query = myConn.createStatement();
+      // query initiated
+      results = query.executeQuery("SELECT * FROM users");
 
-			// data parsed into list
-			while (results.next()) {
-				User tempUser = convertRowToUser(results);
-				list.add(tempUser);
-			}
-			return list;
-		} finally {
-			// safely closing statement
-			close(query, results);
-		}
-	}
+      // data parsed into list
+      while (results.next()) {
+        User tempUser = convertRowToUser(results);
+        list.add(tempUser);
+      }
+      return list;
+    } finally {
+      // safely closing statement
+      close(query, results);
+    }
+  }
 
   /**
    * gets all users in the database with a specific username
