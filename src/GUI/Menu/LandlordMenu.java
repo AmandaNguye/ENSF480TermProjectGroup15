@@ -6,13 +6,13 @@ import src.GUI.Tabs.RegisterPropertyForm;
 import src.GUI.Tabs.ViewEmailWindow;
 
 /**
- * LandlordMenu displays the landlord window 
+ * LandlordMenu displays the landlord window
  */
 public class LandlordMenu extends Menu {
 
   /**
    * Constructor
-   * 
+   *
    * @param user 	landlord's username
    */
   public LandlordMenu(String user) {
@@ -32,5 +32,6 @@ public class LandlordMenu extends Menu {
     tabs.add("View Email Messages", panel4);
     this.add(tabs);
     this.setLayout(null);
+    this.add(logout);
   }
 }

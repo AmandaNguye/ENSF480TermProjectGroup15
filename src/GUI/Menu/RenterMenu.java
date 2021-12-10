@@ -6,13 +6,13 @@ import src.GUI.Tabs.ViewNotificationWindow;
 import src.GUI.Tabs.ViewSubscriptionsWindow;
 
 /**
- * RenterMenu displays the renter window 
+ * RenterMenu displays the renter window
  */
 public class RenterMenu extends Menu {
 
   /**
    * Constructor
-   * 
+   *
    * @param user 	renter's username
    */
   public RenterMenu(String user) {
@@ -33,5 +33,6 @@ public class RenterMenu extends Menu {
     tabs.add("View Email Messages", panel4);
     this.add(tabs);
     this.setLayout(null);
+    this.add(logout);
   }
 }
