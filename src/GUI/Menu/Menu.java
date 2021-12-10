@@ -1,6 +1,7 @@
 package src.GUI.Menu;
 
 import java.awt.Font;
+import java.awt.event.*;
 import javax.swing.*;
 
 /**
@@ -14,11 +15,12 @@ public class Menu extends JFrame {
   protected JPanel panel3;
   protected JPanel panel4;
   protected JPanel panel5;
+  protected JButton logout;
   protected JTabbedPane tabs;
 
-	/**
-	 * Constructor
-	 */
+  /**
+   * Constructor
+   */
   Menu(String title) {
     setTitle(title);
     setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
@@ -29,5 +31,18 @@ public class Menu extends JFrame {
     tabs = new JTabbedPane();
     tabs.setBounds(20, 60, 550, 480);
     setVisible(true);
+    JFrame menu = this;
+    logout = new JButton("Logout");
+    logout.addActionListener(
+      new ActionListener() {
+        public void actionPerformed(ActionEvent e) {
+          menu.dispose();
+          GuestMenu frame = new GuestMenu();
+          frame.setVisible(true);
+        }
+      }
+    );
+    logout.setBounds(485, 20, 80, 25);
+    logout.setVisible(true);
   }
 }

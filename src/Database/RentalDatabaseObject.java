@@ -278,6 +278,70 @@ public class RentalDatabaseObject {
   }
 
   /**
+   * deletes a specific property stored in the database
+   *
+   * @throws 	SQLException For handling exceptions regarding MySQL
+   * @param 	address		property's address
+   */
+  public void deleteProperty(String address) throws Exception {
+    PreparedStatement query = null;
+    ResultSet results = null;
+
+    try {
+      query =
+        myConn.prepareStatement("DELETE FROM properties WHERE address = ?");
+      query.setString(1, address);
+      System.out.println(query.toString());
+      int rowcount = query.executeUpdate();
+      System.out.println("Success - " + rowcount + " rows affected.");
+    } finally {
+      close(query, results);
+    }
+  }
+
+  /**
+   * deletes a specific property stored in the database
+   *
+   * @throws 	SQLException For handling exceptions regarding MySQL
+   * @param 	id		property's id
+   */
+  public void deleteProperty(int id) throws Exception {
+    PreparedStatement query = null;
+    ResultSet results = null;
+
+    try {
+      query = myConn.prepareStatement("DELETE FROM properties WHERE id = ?");
+      query.setInt(1, id);
+      System.out.println(query.toString());
+      int rowcount = query.executeUpdate();
+      System.out.println("Success - " + rowcount + " rows affected.");
+    } finally {
+      close(query, results);
+    }
+  }
+
+  /**
+   * deletes a specific user stored in the database
+   *
+   * @throws 	SQLException For handling exceptions regarding MySQL
+   * @param 	username		user's username
+   */
+  public void deleteUser(String username) throws Exception {
+    PreparedStatement query = null;
+    ResultSet results = null;
+
+    try {
+      query = myConn.prepareStatement("DELETE FROM users WHERE username = ?");
+      query.setString(1, username);
+      System.out.println(query.toString());
+      int rowcount = query.executeUpdate();
+      System.out.println("Success - " + rowcount + " rows affected.");
+    } finally {
+      close(query, results);
+    }
+  }
+
+  /**
    * stores email being sent to a specific user in the database
    *
    * @throws 	SQLException For handling exceptions regarding MySQL
