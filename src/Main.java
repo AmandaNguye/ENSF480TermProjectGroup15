@@ -76,6 +76,7 @@ public class Main extends JFrame {
 
   public static void getDatabaseAccount() throws Exception {
     File myObj = new File("account.properties");
+    boolean filemade = myObj.createNewFile();
     boolean alreadytried = false;
     do {
       try {
@@ -94,7 +95,7 @@ public class Main extends JFrame {
           ) {
             System.exit(0);
           }
-        } else if (!myObj.createNewFile()) {
+        } else if (!filemade) {
           if (
             JOptionPane.showConfirmDialog(
               null,
@@ -129,6 +130,7 @@ public class Main extends JFrame {
           prop.store(output, null);
           String temp = "dburl=jdbc:mysql://" + host + ":" + port + "/ensf480";
           output.write(temp.getBytes(Charset.forName("UTF-8")));
+          alreadytried = true;
         } catch (IOException i) {
           System.out.println("An error occurred.");
           e.printStackTrace();
