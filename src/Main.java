@@ -15,7 +15,7 @@
 
 
 (1)Run the program using the following line in the command prompt:
-"java -jar Rental.jar"
+"java -jar ENSF480TermProjectGroup15.jar"
 */
 
 package src;
@@ -48,7 +48,7 @@ public class Main extends JFrame {
       new Runnable() {
         public void run() {
           try {
-            Boolean testing = true;
+            Boolean testing = false;
             if (!testing) {
               Menu frame = new GuestMenu();
               frame.setVisible(true);
